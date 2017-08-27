@@ -10,8 +10,7 @@
   
 
   
-  <meta name="description" content="很多移动应用程序（微信，支付宝…）的主页面布局的底部是一个Tab控件，点击Tab不同的选项，切换不同的页面.这种效果的实现方式多种多样。下面记录几种实现方式！
-方式1：使用LinearLayout+RelativeLayout实现Tab原理页部底部使用LinearLayout+RelativeLay">
+  <meta name="description" content="很多移动应用程序（微信，支付宝…）的主页面布局的底部是一个Tab控件，点击Tab不同的选项，切换不同的页面.这种效果的实现方式多种多样。下面记录几种实现方式！">
   
 
   
@@ -85,6 +84,7 @@
     <div class="entry">
       
         <p>很多移动应用程序（微信，支付宝…）的主页面布局的底部是一个Tab控件，点击Tab不同的选项，切换不同的页面.<br>这种效果的实现方式多种多样。下面记录几种实现方式！</p>
+<a id="more"></a>
 <h2 id="方式1：使用LinearLayout-RelativeLayout实现Tab"><a href="#方式1：使用LinearLayout-RelativeLayout实现Tab" class="headerlink" title="方式1：使用LinearLayout+RelativeLayout实现Tab"></a>方式1：使用LinearLayout+RelativeLayout实现Tab</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>页部底部使用LinearLayout+RelativeLayout实现Tab布局，上部使用FragmentManager对Fragment进行管理，在切<br>换Tab后，使用FragmentManager对之前显示的Fragment进行hide，对将要显示的Fragment进行show。以此显示不同<br>的页面。</p>
 <p>优点：实现简单</p>
 <p>缺点：在页面启动时，加载所有的Fragment，对应用性能会有影响；</p>

@@ -10,7 +10,7 @@
   
 
   
-  <meta name="description" content="##错误信息1234567java.lang.RuntimeException: Can&amp;apos;t create handler inside thread that has not called Looper.prepare()                  	 at android.os">
+  <meta name="description" content="##错误信息1234567java.lang.RuntimeException: Can&amp;apos;t create handler inside thread that has not called Looper.prepare()                  	 at android.os.Handler.&amp;lt;init&amp;gt;(Handler.java:200)                            	at android.os.Handler.&amp;lt;init&amp;gt;(Handler.java:114)                             	at android.widget.Toast$TN.&amp;lt;init&amp;gt;(Toast.java:345) 	at android.widget.Toast.&amp;lt;init&amp;gt;(Toast.java:101) 	at android.widget.Toast.makeText(Toast.java:259)                          	at demo.permission.example.com.MainActivity$1.run(MainActivity.java:22)     at java.lang.Thread.run(Thread.java:818)">
   
 
   
@@ -84,6 +84,7 @@
     <div class="entry">
       
         <p>##错误信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">java.lang.RuntimeException: Can&apos;t create handler inside thread that has not called Looper.prepare()                  	 at android.os.Handler.&lt;init&gt;(Handler.java:200)                            </div><div class="line">	at android.os.Handler.&lt;init&gt;(Handler.java:114)                             </div><div class="line">	at android.widget.Toast$TN.&lt;init&gt;(Toast.java:345) </div><div class="line">	at android.widget.Toast.&lt;init&gt;(Toast.java:101) </div><div class="line">	at android.widget.Toast.makeText(Toast.java:259)                          </div><div class="line">	at demo.permission.example.com.MainActivity$1.run(MainActivity.java:22) </div><div class="line">    at java.lang.Thread.run(Thread.java:818)</div></pre></td></tr></table></figure></p>
+<a id="more"></a>
 <p>##错误原因<br>从日志看，错误是使用Handler和Looper出错，使用Handler时并没有对Looper进行初始化。但是我并没有创建使用Handler，我仅仅只是使用了Toast。仅仅只是在子线程中写了一句：<br>Toast.makeText(MainActivity.this, “test”, Toast.LENGTH_LONG).show();<br>通过翻看源码，Toast的show和hide方法的实现是基于Handler机制。但是其代码中只初始化了Handler:<br>final Handler mHandler = new Handler();<br>并没有初始化Looper的方法（Looper.perpare()和Looper.loop()），说明Toast使用的Handler是当前调用的线程的Looper。所以，当我们在主线程（也就是UI线程中）可以随意调用Toast.makeText方法，因为Android系统帮我们实现了主线程的Looper初始化。但是我们是在子线程中调用的，同时初始化Looper，因此出现此错误<br><a href="http://www.2cto.com/kf/201502/374764.html" target="_blank" rel="external">http://www.2cto.com/kf/201502/374764.html</a></p>
 <p>##解决办法<br>在待使用的子线程中初始化Looper。具体实现的方式为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Looper.prepare(); </div><div class="line">Toast.makeText(getApplicationContext(), &quot;test&quot;, Toast.LENGTH_LONG).show(); </div><div class="line">Looper.loop();</div></pre></td></tr></table></figure></p>
 

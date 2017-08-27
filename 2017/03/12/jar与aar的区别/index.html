@@ -86,6 +86,7 @@
       
         <p>使用Android Studio对工程进行编译后，会同时生成jar与aar文件。</p>
 <h3 id="其位置分别位于："><a href="#其位置分别位于：" class="headerlink" title="其位置分别位于："></a>其位置分别位于：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">jar: /build/intermediates/bundles/debug(release)/classes.jar</div><div class="line">aar: /build/outputs/aar/libraryname.aar</div></pre></td></tr></table></figure>
+<a id="more"></a>
 <h3 id="两者的区别："><a href="#两者的区别：" class="headerlink" title="两者的区别："></a>两者的区别：</h3><p>jar 中只包含了class文件与清单文件。<br>aar中除了包含jar中的class文件还包含工程中使用的所有资源，class及res资源文件全部包含。<br>如果只是一个简单的类库那么使用生成的*.jar文件即可；如果你的是一个UI库，包含一些自己写的控件布局文件以及字体等资源文件那么就只能使用*.aar文件。</p>
 <h3 id="使用方式："><a href="#使用方式：" class="headerlink" title="使用方式："></a>使用方式：</h3><p>jar 拷贝到 libs 目录，并在gradle文件中添加  </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">        compile fileTree(include: [&apos;*.jar&apos;], dir: &apos;libs&apos;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>

@@ -10,9 +10,7 @@
   
 
   
-  <meta name="description" content="作用在日常开发中，会常用（Fragment）LayoutInflater这个类来加载layout布局文件，并返回对应的View对象！
-获得LayoutInflater的三种方式
-使用context.getSystemService()方式获得123456LayoutInflater localinf">
+  <meta name="description" content="作用在日常开发中，会常用（Fragment）LayoutInflater这个类来加载layout布局文件，并返回对应的View对象！">
   
 
   
@@ -86,6 +84,7 @@
     <div class="entry">
       
         <h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><p>在日常开发中，会常用（Fragment）LayoutInflater这个类来加载layout布局文件，并返回对应的View对象！</p>
+<a id="more"></a>
 <h2 id="获得LayoutInflater的三种方式"><a href="#获得LayoutInflater的三种方式" class="headerlink" title="获得LayoutInflater的三种方式"></a>获得LayoutInflater的三种方式</h2><ol>
 <li>使用context.getSystemService()方式获得<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">LayoutInflater localinflater =</div><div class="line">        (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);</div><div class="line">``` </div><div class="line"></div><div class="line">2. 使用LayoutInflater.from(context)方式</div><div class="line">其实现原码为：</div></pre></td></tr></table></figure>
 </li>
