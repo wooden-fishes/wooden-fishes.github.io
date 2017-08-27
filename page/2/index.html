@@ -1,0 +1,586 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Seite 2 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Hexo"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Hexo</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper">
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-12T12:36:24.000Z"><a href="/2017/03/12/Android快速点击导致多次执行的解决思路/">2017-03-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/03/12/Android快速点击导致多次执行的解决思路/">Android快速点击导致多次执行的解决思路</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>listview 的item点击过快的时候，会打开两个详情页面。button 在快速点击后也可能造成多次响应。解决问题的思路是，在点击后的一段时间内再次点击时不进行处理，即只响应首次点击。</p>
+<p>具体实现如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public static boolean isFastDoubleClick()&#123;  </div><div class="line">	long time = System.currentTimeMillis();  </div><div class="line">	long timeD = time - lastClickTime;  </div><div class="line">	if(0&lt;timeD&amp;&amp;timeD&lt; 500)&#123;  </div><div class="line">		return true;  </div><div class="line">	&#125;  </div><div class="line">	lastClickTime = time;  </div><div class="line">	return false;  </div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-12T12:24:24.000Z"><a href="/2017/03/12/jar与aar的区别/">2017-03-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/03/12/jar与aar的区别/">jar与aar的区别</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>使用Android Studio对工程进行编译后，会同时生成jar与aar文件。</p>
+<h3 id="其位置分别位于："><a href="#其位置分别位于：" class="headerlink" title="其位置分别位于："></a>其位置分别位于：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">jar: /build/intermediates/bundles/debug(release)/classes.jar</div><div class="line">aar: /build/outputs/aar/libraryname.aar</div></pre></td></tr></table></figure>
+<h3 id="两者的区别："><a href="#两者的区别：" class="headerlink" title="两者的区别："></a>两者的区别：</h3><p>jar 中只包含了class文件与清单文件。<br>aar中除了包含jar中的class文件还包含工程中使用的所有资源，class及res资源文件全部包含。<br>如果只是一个简单的类库那么使用生成的*.jar文件即可；如果你的是一个UI库，包含一些自己写的控件布局文件以及字体等资源文件那么就只能使用*.aar文件。</p>
+<h3 id="使用方式："><a href="#使用方式：" class="headerlink" title="使用方式："></a>使用方式：</h3><p>jar 拷贝到 libs 目录，并在gradle文件中添加  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dependencies &#123;</div><div class="line">        compile fileTree(include: [&apos;*.jar&apos;], dir: &apos;libs&apos;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>aar 有两种方式：<br>1.本地使用<br>拷贝到 libs目录，并在gradle文件中添加</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">    flatDir &#123;</div><div class="line">        dirs &apos;libs&apos;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">dependencies &#123;</div><div class="line">    compile(name:&apos;genius&apos;, ext:&apos;aar&apos;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>2.网络加载<br>将aar发布到mavenCentral仓库，在gradle文件中添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">    maven &#123;</div><div class="line">        url &quot;http://maven.dev.sh.ctripcorp.com:8081/nexus/content/groups/public&quot;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">dependencies &#123;</div><div class="line">    classpath &apos;net.sf.proguard:proguard-gradle:5.2.1&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h3 id="多层Module依赖本地AAR"><a href="#多层Module依赖本地AAR" class="headerlink" title="多层Module依赖本地AAR"></a>多层Module依赖本地AAR</h3><p>Android Studio多层Module依赖本地AAR，在编译的时候出发生错误，找不到AAR（ModuleA libs中有c.aar，ModuleB依赖ModuleA）<br>此时需要在ModuleB的build.gradle中添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">repositories &#123;</div><div class="line">    flatDir &#123;</div><div class="line">        dirs &apos;../ModuleA/libs&apos;,&apos;libs&apos;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>同时在dependencies中添加aar名称：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compile(name:&apos;c&apos;, ext:&apos;aar&apos;)</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-12T07:52:24.000Z"><a href="/2017/03/12/INSTALL FAILED CONFLICTING PROVIDER/">2017-03-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/03/12/INSTALL FAILED CONFLICTING PROVIDER/">INSTALL FAILED CONFLICTING PROVIDER</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>##出错信息<br>安装应用程序时出错：INSTALL FAILED CONFLICTING PROVIDER</p>
+<p>##错误原因<br>多个程序使用了相同的provider，在AndroidManifest中配置了相同的android:authorities，在安装是其中一个程序时，再安装另外一个时，提示 provider冲突。在同一个设备上，provider配置的android:authorities必须是全局惟一的</p>
+<p>##解决办法<br>在不同的应用中，配置不同的android:authorities</p>
+<p>stackoverflow 有其它方案<br><a href="http://stackoverflow.com/questions/16267785/install-shows-error-in-console-install-failed-conflicting-provider" target="_blank" rel="external">http://stackoverflow.com/questions/16267785/install-shows-error-in-console-install-failed-conflicting-provider</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-12T07:50:24.000Z"><a href="/2017/03/12/MenuItem中使用app-actionLayout（Switch）造成空指针异常/">2017-03-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/03/12/MenuItem中使用app-actionLayout（Switch）造成空指针异常/">MenuItem中使用app:actionLayout（Switch）造成空指针异常</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="使用情况："><a href="#使用情况：" class="headerlink" title="使用情况："></a>使用情况：</h2><p>MenuItem中使用了app:actionLayout<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;menu xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</div><div class="line">    xmlns:tools=&quot;http://schemas.android.com/tools&quot;</div><div class="line">    tools:context=&quot;com.example.nfcdemo.MainActivity&quot;&gt;</div><div class="line"></div><div class="line">    &lt;item</div><div class="line">        android:id=&quot;@+id/action_open_close_nfc&quot;</div><div class="line">        android:orderInCategory=&quot;100&quot;</div><div class="line">        android:title=&quot;&quot;</div><div class="line">        app:actionLayout=&quot;@layout/menu_switch&quot;</div><div class="line">        app:showAsAction=&quot;always&quot; /&gt; </div><div class="line">&lt;/menu&gt;</div></pre></td></tr></table></figure></p>
+<p>menu_switch对应的布局中包含了一个Switch控件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">   android:layout_width=&quot;match_parent&quot;</div><div class="line">   android:layout_height=&quot;match_parent&quot;</div><div class="line">   &gt;</div><div class="line">    &lt;Switch</div><div class="line">       android:id=&quot;@+id/switchForActionBar&quot;</div><div class="line">       android:layout_width=&quot;wrap_content&quot;</div><div class="line">       android:layout_height=&quot;wrap_content&quot;</div><div class="line">       android:layout_centerInParent=&quot;true&quot;</div><div class="line">       android:text=&quot;&quot;</div><div class="line">       android:checked=&quot;false&quot;</div><div class="line">       android:theme=&quot;@style/ThemeOverlay.SwitchBar&quot;</div><div class="line">       /&gt;</div><div class="line"></div><div class="line">&lt;/RelativeLayout&gt;</div></pre></td></tr></table></figure></p>
+<p>##错误原因<br>直接使用错误方式（findViewById）获取Switch，导致获取失败，使用时空指针异常</p>
+<p>##解决办法<br>使用正确的方式（menu–&gt;menuitem–&gt;actionview–&gt;switch）获取Switch<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public boolean onCreateOptionsMenu(Menu menu) &#123;</div><div class="line">    // Inflate the menu; this adds items to the action bar if it is present.</div><div class="line">    getMenuInflater().inflate(R.menu.menu_main, menu);</div><div class="line">    MenuItem switchItem = menu.findItem(R.id.action_open_close_nfc);</div><div class="line">   mSwitch = (Switch) switchItem.getActionView().findViewById(R.id.switchForActionBar);</div><div class="line">    if (mNfcAdapter != null) &#123;</div><div class="line">        mSwitch.setChecked(mNfcAdapter.isEnabled());</div><div class="line">    &#125;</div><div class="line">    return true;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-12T07:48:24.000Z"><a href="/2017/03/12/pjsip源码编译/">2017-03-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/03/12/pjsip源码编译/">pjsip源码编译</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><ol>
+<li>搭建Android NDK(我使用的是<a href="&quot;http://dl.google.com/android/ndk/android-ndk-r10e-darwin-x86_64.bin&quot;">android-ndk-r10</a>)编译环境</li>
+<li><p>搭建SWIG环境，SWIG依赖PCRE，需先下载安装PCRE<br>下载<a href="&quot;https://nchc.dl.sourceforge.net/project/pcre/pcre/8.39/pcre-8.39.tar.gz&quot;">PCRE</a><br>解压缩软件包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar -xvf pcre.tar.gz</div></pre></td></tr></table></figure>
+<p>执行命令安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo ./configure --prefix=/opt/pcre</div><div class="line">sudo make</div><div class="line">sudo make install</div></pre></td></tr></table></figure>
+<p>下载<a href="&quot;https://nchc.dl.sourceforge.net/project/swig/swig/swig-3.0.11/swig-3.0.11.tar.gz&quot;">SWIG</a><br>解压缩软件包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar -xvf pcre.tar.gz</div></pre></td></tr></table></figure>
+<p>执行命令安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo  ./configure --with-pcre-prefix=/opt/pcre</div><div class="line">sudo make</div><div class="line">sudo make install</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="编译准备"><a href="#编译准备" class="headerlink" title="编译准备"></a>编译准备</h2><ol>
+<li>下载PJSIP源码</li>
+<li><p>在pjproject/pjlib/include/pj/目录下新建config_site.h文件并添加如下内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/* Activate Android specific settings in the &apos;config_site_sample.h&apos; */</div><div class="line">#define PJ_CONFIG_ANDROID 1</div><div class="line">#include &lt;pj/config_site_sample.h&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改configure-android文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ANDROID_NDK_ROOT=&quot;/Users/xx/Library/android-ndk-r10e&quot;</div><div class="line">APP_PLATFORM=&quot;android-21&quot;</div><div class="line">TARGET_ABI=&quot;armeabi&quot;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>##开始编译</p>
+<ol>
+<li><p>进入pjsip目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd /path/to/your/pjsip/dir</div></pre></td></tr></table></figure>
+</li>
+<li><p>执行configure</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./configure-android</div></pre></td></tr></table></figure>
+</li>
+<li><p>make</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make dep &amp;&amp; make clean &amp;&amp; make</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>##编译 telnet 接口的 pjsua 库<br> 进入到pjsip-apps/src/pjsua/android目录下，执行ndk-build<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ cd /path/to/your/pjsip/dir</div><div class="line">$ cd pjsip-apps/src/pjsua/android</div><div class="line">$ ndk-build</div></pre></td></tr></table></figure></p>
+<p>##编译 pjsua2 示例应用<br>  进入$PJDIR/pjsip-apps/src/swig目录下执行make, 生成测试代码和libpjsua2.so<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ cd /path/to/your/pjsip/dir</div><div class="line">$ cd pjsip-apps/src/swig</div><div class="line">$ make</div></pre></td></tr></table></figure></p>
+<p>##创建自已的 pjsua2 应用<br>  新建Android工程;将$PJDIR/pjsip-apps/src/swig目录下的代码和so拷贝<br>  到新建工程中；<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ cd $YOUR_PROJECT_DIR</div><div class="line">$ cp -r $PJSIP_DIR/pjsip-apps/src/swig/java/android/src .</div><div class="line"></div><div class="line">$ cd $YOUR_PROJECT_DIR</div><div class="line">$ cp -r $PJSIP_DIR/pjsip-apps/src/swig/java/android/libs .</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-12T07:44:24.000Z"><a href="/2017/03/12/CursorWindow OOM/">2017-03-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/03/12/CursorWindow OOM/">CursorWindow OOM</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>##错误信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">08-30 20:27:36.751 E/CursorWindow(  760): Could not allocate CursorWindow &apos;/data/data/com.android.providers.media/databases/external.db&apos; of size 2097152 due to error -12.</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760): *** Uncaught remote exception!  (Exceptions are not yet supported across processes.)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760): android.database.CursorWindowAllocationException: Cursor window allocation of 2048 kb failed. # Open Cursors=781 (# cursors opened by pid 3105=781)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at android.database.CursorWindow.&lt;init&gt;(CursorWindow.java:104)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at android.database.AbstractWindowedCursor.clearOrCreateWindow(AbstractWindowedCursor.java:198)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at android.database.sqlite.SQLiteCursor.fillWindow(SQLiteCursor.java:162)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at android.database.sqlite.SQLiteCursor.getCount(SQLiteCursor.java:156)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at android.database.CursorToBulkCursorAdaptor.count(CursorToBulkCursorAdaptor.java:184)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at android.content.ContentProviderNative.onTransact(ContentProviderNative.java:117)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at android.os.Binder.execTransact(Binder.java:338)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at dalvik.system.NativeStart.run(Native Method)</div></pre></td></tr></table></figure></p>
+<p>##错误原因<br>CursorWindow缓存数据达到最大限制（2Ｍ不同的机器和SQLite版本其值可能不同）后，仍有查询结果集需要缓存，在申请内存分配时申请失败发生了OOM内存溢出；SQLite查询出的数据集cursor，都由native层的CursorWindow进行数据管理，包括内存空间的申请和数据的填充。CursorWindow实际上是共享内存的抽象，以实现跨进程，跨应用数据共享（ContentProvider作为数据通道，也支持跨进程，跨应用的数据访问）<br>在ContentProvider端透过SQLiteDatabase的封装查询到的数据集保存在CursorWindow所指向的共享内存中，然后通过Binder把这片共享内存传递到ContentResolver端，即查询端。这样客户就可以通过Cursor来访问这块共享内存中的数据集了。</p>
+<p>##解决办法<br>保证CursorWindow不会达到最大限制）：<br>1.只查询需要的字段；<br>     根据UI显示需要，或实际需要查询的字段进行查询，尽量不会表查询<br>2.二进制文件不要存在数据库中；<br>     数据库仅适用于保存一些较短文字，整数，布尔，浮点数等一些，易于查询和操作的轻量级的数据，目的也是在于快速搜索和查询。对于像图片，较长的文字（如文章）等大数据，最好直接以文件形式存储在硬盘中，然后在数据库保存它们的访问路径<br>3.对于大数据量的查询采用分段查询方式；<br>     无论表中的一条记录数据量如何的小，当条数达到5000级或者万级或者更多的时候，还是会达到最大的限制<br>4.正确的关闭Cursor，释放CursorWindow中不用的资源（需手动调用释放native中的资源，类似3.0之前的Bitmap需要手动释放。调用close的必要性：<a href="http://www.jianshu.com/p/3b433ed25aaf" target="_blank" rel="external">http://www.jianshu.com/p/3b433ed25aaf</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">     Cursor c;</div><div class="line">     try &#123; </div><div class="line">         c = queryCursor(); </div><div class="line">         int a = c.getInt(1); </div><div class="line">         ......</div><div class="line">         // 如果出错,后面的cursor.close()将不会执行</div><div class="line">         //c.close(); </div><div class="line">     &#125; catch (Exception e) &#123; </div><div class="line">     &#125; finally&#123;</div><div class="line">         if (c != null) &#123;</div><div class="line">             c.close();</div><div class="line">         &#125;</div><div class="line">     &#125;</div></pre></td></tr></table></figure></p>
+<p>如果你的Cursor需要在Activity的不同的生命周期方法中打开和关闭，那么一般可以这样做：<br>在onCreate()中打开，在onDestroy()中关闭；<br>在onStart() 中打开，在onStop() 中关闭；<br>在onResume()中打开，在onPause() 中关闭；<br>即要在成对的生命周期方法中打开/关闭</p>
+<p>如果程序中使用了CursorAdapter（例如Music），那么可以使用它的changeCursor(Cursor cursor)方法同时完成关闭旧Cursor使用新Cursor的操作</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-09T15:11:24.000Z"><a href="/2017/03/09/Android在锁屏状态下显示Activity/">2017-03-09</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/03/09/Android在锁屏状态下显示Activity/">Android在锁屏状态下弹出Activity!</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>Android 在锁屏状态中，有些情况下需要有较强的提示，这里仅仅使用通知栏不够，例如 来电，闹钟 等等。</p>
+<p>要实现这种功能很简单，只需要Activity中配置相应的WindowFlags即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |</div><div class="line">WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);</div></pre></td></tr></table></figure></p>
+<p>其中<br>FLAG_SHOW_WHEN_LOCKED 表示此Activity在锁屏的时候也可以显示出来；<br>FLAG_TURN_SCREEN_ON 表示显示此Window时把屏幕点亮；</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-01T06:34:24.000Z"><a href="/2017/03/01/TAB页面实现/">2017-03-01</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/03/01/TAB页面实现/">TAB页面实现</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>很多移动应用程序（微信，支付宝…）的主页面布局的底部是一个Tab控件，点击Tab不同的选项，切换不同的页面.<br>这种效果的实现方式多种多样。下面记录几种实现方式！</p>
+<h2 id="方式1：使用LinearLayout-RelativeLayout实现Tab"><a href="#方式1：使用LinearLayout-RelativeLayout实现Tab" class="headerlink" title="方式1：使用LinearLayout+RelativeLayout实现Tab"></a>方式1：使用LinearLayout+RelativeLayout实现Tab</h2><h3 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h3><p>页部底部使用LinearLayout+RelativeLayout实现Tab布局，上部使用FragmentManager对Fragment进行管理，在切<br>换Tab后，使用FragmentManager对之前显示的Fragment进行hide，对将要显示的Fragment进行show。以此显示不同<br>的页面。</p>
+<p>优点：实现简单</p>
+<p>缺点：在页面启动时，加载所有的Fragment，对应用性能会有影响；</p>
+<h3 id="实现细节"><a href="#实现细节" class="headerlink" title="实现细节"></a>实现细节</h3><p>布局xml<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">                android:layout_width=&quot;match_parent&quot;</div><div class="line">                android:layout_height=&quot;match_parent&quot;</div><div class="line">                android:background=&quot;@android:color/white&quot;&gt;</div><div class="line"></div><div class="line">    &lt;LinearLayout</div><div class="line">        android:id=&quot;@+id/footer&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;60dp&quot;</div><div class="line">        android:layout_alignParentBottom=&quot;true&quot;</div><div class="line">        android:orientation=&quot;horizontal&quot;&gt;</div><div class="line"></div><div class="line">        &lt;RelativeLayout</div><div class="line">            android:id=&quot;@+id/home&quot;</div><div class="line">            android:layout_width=&quot;0dp&quot;</div><div class="line">            android:layout_height=&quot;match_parent&quot;</div><div class="line">            android:layout_weight=&quot;1&quot;</div><div class="line">            android:clickable=&quot;true&quot;&gt;</div><div class="line"></div><div class="line">            &lt;TextView</div><div class="line">                android:id=&quot;@+id/tv_home&quot;</div><div class="line">                android:layout_width=&quot;wrap_content&quot;</div><div class="line">                android:layout_height=&quot;20dp&quot;</div><div class="line">                android:layout_alignParentBottom=&quot;true&quot;</div><div class="line">                android:layout_centerHorizontal=&quot;true&quot;</div><div class="line">                android:layout_marginBottom=&quot;5dp&quot;</div><div class="line">                android:gravity=&quot;center&quot;</div><div class="line">                android:text=&quot;@string/home&quot;</div><div class="line">                android:textColor=&quot;@drawable/xcall_footer_text_color&quot;/&gt;</div><div class="line"></div><div class="line">            &lt;ImageView</div><div class="line">                android:id=&quot;@+id/iv_home&quot;</div><div class="line">                android:layout_width=&quot;20dp&quot;</div><div class="line">                android:layout_height=&quot;20dp&quot;</div><div class="line">                android:layout_above=&quot;@id/tv_home&quot;</div><div class="line">                android:layout_centerHorizontal=&quot;true&quot;</div><div class="line">                android:layout_marginBottom=&quot;5dp&quot;</div><div class="line">                android:src=&quot;@drawable/xcall_football_home&quot;/&gt;</div><div class="line"></div><div class="line">        &lt;/RelativeLayout&gt;</div><div class="line"></div><div class="line">        &lt;RelativeLayout</div><div class="line">            android:id=&quot;@+id/history&quot;</div><div class="line">            android:layout_width=&quot;0dp&quot;</div><div class="line">            android:layout_height=&quot;match_parent&quot;</div><div class="line">            android:layout_weight=&quot;1&quot;</div><div class="line">            android:clickable=&quot;true&quot;&gt;</div><div class="line"></div><div class="line">            &lt;TextView</div><div class="line">                android:id=&quot;@+id/tv_history&quot;</div><div class="line">                android:layout_width=&quot;wrap_content&quot;</div><div class="line">                android:layout_height=&quot;20dp&quot;</div><div class="line">                android:layout_alignParentBottom=&quot;true&quot;</div><div class="line">                android:layout_centerHorizontal=&quot;true&quot;</div><div class="line">                android:layout_marginBottom=&quot;5dp&quot;</div><div class="line">                android:gravity=&quot;center&quot;</div><div class="line">                android:text=&quot;@string/history_calls&quot;</div><div class="line">                android:textColor=&quot;@drawable/xcall_footer_text_color&quot;/&gt;</div><div class="line"></div><div class="line">            &lt;ImageView</div><div class="line">                android:id=&quot;@+id/iv_history&quot;</div><div class="line">                android:layout_width=&quot;20dp&quot;</div><div class="line">                android:layout_height=&quot;20dp&quot;</div><div class="line">                android:layout_above=&quot;@id/tv_history&quot;</div><div class="line">                android:layout_centerHorizontal=&quot;true&quot;</div><div class="line">                android:layout_marginBottom=&quot;5dp&quot;</div><div class="line">                android:src=&quot;@drawable/xcall_football_history&quot;/&gt;</div><div class="line">        &lt;/RelativeLayout&gt;</div><div class="line"></div><div class="line">        &lt;RelativeLayout</div><div class="line">            android:id=&quot;@+id/contacts&quot;</div><div class="line">            android:layout_width=&quot;0dp&quot;</div><div class="line">            android:layout_height=&quot;match_parent&quot;</div><div class="line">            android:layout_weight=&quot;1&quot;</div><div class="line">            android:clickable=&quot;true&quot;&gt;</div><div class="line"></div><div class="line">            &lt;TextView</div><div class="line">                android:id=&quot;@+id/tv_contacts&quot;</div><div class="line">                android:layout_width=&quot;wrap_content&quot;</div><div class="line">                android:layout_height=&quot;20dp&quot;</div><div class="line">                android:layout_alignParentBottom=&quot;true&quot;</div><div class="line">                android:layout_centerHorizontal=&quot;true&quot;</div><div class="line">                android:layout_marginBottom=&quot;5dp&quot;</div><div class="line">                android:gravity=&quot;center&quot;</div><div class="line">                android:text=&quot;@string/contacts&quot;</div><div class="line">                android:textColor=&quot;@drawable/xcall_footer_text_color&quot;/&gt;</div><div class="line"></div><div class="line">            &lt;ImageView</div><div class="line">                android:id=&quot;@+id/iv_contacts&quot;</div><div class="line">                android:layout_width=&quot;20dp&quot;</div><div class="line">                android:layout_height=&quot;20dp&quot;</div><div class="line">                android:layout_above=&quot;@id/tv_contacts&quot;</div><div class="line">                android:layout_centerHorizontal=&quot;true&quot;</div><div class="line">                android:layout_marginBottom=&quot;5dp&quot;</div><div class="line">                android:src=&quot;@drawable/xcall_football_contacts&quot;/&gt;</div><div class="line"></div><div class="line">        &lt;/RelativeLayout&gt;</div><div class="line"></div><div class="line">        &lt;RelativeLayout</div><div class="line">            android:id=&quot;@+id/dialer&quot;</div><div class="line">            android:layout_width=&quot;0dp&quot;</div><div class="line">            android:layout_height=&quot;match_parent&quot;</div><div class="line">            android:layout_weight=&quot;1&quot;</div><div class="line">            android:clickable=&quot;true&quot;&gt;</div><div class="line"></div><div class="line">            &lt;TextView</div><div class="line">                android:id=&quot;@+id/tv_dialer&quot;</div><div class="line">                android:layout_width=&quot;wrap_content&quot;</div><div class="line">                android:layout_height=&quot;20dp&quot;</div><div class="line">                android:layout_alignParentBottom=&quot;true&quot;</div><div class="line">                android:layout_centerHorizontal=&quot;true&quot;</div><div class="line">                android:layout_marginBottom=&quot;5dp&quot;</div><div class="line">                android:gravity=&quot;center&quot;</div><div class="line">                android:text=&quot;@string/dialer&quot;</div><div class="line">                android:textColor=&quot;@drawable/xcall_footer_text_color&quot;/&gt;</div><div class="line"></div><div class="line">            &lt;ImageView</div><div class="line">                android:id=&quot;@+id/iv_dialer&quot;</div><div class="line">                android:layout_width=&quot;20dp&quot;</div><div class="line">                android:layout_height=&quot;20dp&quot;</div><div class="line">                android:layout_above=&quot;@id/tv_dialer&quot;</div><div class="line">                android:layout_centerHorizontal=&quot;true&quot;</div><div class="line">                android:layout_marginBottom=&quot;5dp&quot;</div><div class="line">                android:src=&quot;@drawable/xcall_football_dialer&quot;/&gt;</div><div class="line">        &lt;/RelativeLayout&gt;</div><div class="line">    &lt;/LinearLayout&gt;</div><div class="line"></div><div class="line">    &lt;View</div><div class="line">        android:id=&quot;@+id/view_divider&quot;</div><div class="line">        style=&quot;@style/line_divider&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;1dp&quot;</div><div class="line">        android:layout_above=&quot;@id/footer&quot;/&gt;</div><div class="line"></div><div class="line"></div><div class="line">    &lt;FrameLayout</div><div class="line">        android:id=&quot;@+id/fragment_container&quot;</div><div class="line">        android:layout_width=&quot;match_parent&quot;</div><div class="line">        android:layout_height=&quot;match_parent&quot;</div><div class="line">        android:layout_above=&quot;@id/view_divider&quot;/&gt;</div><div class="line">&lt;/RelativeLayout&gt;</div></pre></td></tr></table></figure></p>
+<p>切换Tab<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">public void changeTab(int index) &#123;</div><div class="line">        if (currentTabIndex != index) &#123;</div><div class="line">            FragmentTransaction trx = getSupportFragmentManager()</div><div class="line">                    .beginTransaction();</div><div class="line">            trx.hide(fragments[currentTabIndex]);</div><div class="line">            if (!fragments[index].isAdded()) &#123;</div><div class="line">                trx.add(R.id.fragment_container, fragments[index]);</div><div class="line">            &#125;</div><div class="line">            trx.show(fragments[index]).commit();</div><div class="line">        &#125;</div><div class="line">        imagebuttons[currentTabIndex].setSelected(false);</div><div class="line">        // 把当前tab设为选中状态</div><div class="line">        imagebuttons[index].setSelected(true);</div><div class="line">        textviews[currentTabIndex].setSelected(false);</div><div class="line">        textviews[index].setSelected(true);</div><div class="line">        currentTabIndex = index;</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-01T06:32:24.000Z"><a href="/2017/03/01/LayoutInflater使用/">2017-03-01</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/03/01/LayoutInflater使用/">LayoutInflater使用</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><p>在日常开发中，会常用（Fragment）LayoutInflater这个类来加载layout布局文件，并返回对应的View对象！</p>
+<h2 id="获得LayoutInflater的三种方式"><a href="#获得LayoutInflater的三种方式" class="headerlink" title="获得LayoutInflater的三种方式"></a>获得LayoutInflater的三种方式</h2><ol>
+<li>使用context.getSystemService()方式获得<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">LayoutInflater localinflater =</div><div class="line">        (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);</div><div class="line">``` </div><div class="line"></div><div class="line">2. 使用LayoutInflater.from(context)方式</div><div class="line">其实现原码为：</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>/**</p>
+<ul>
+<li>Obtains the LayoutInflater from the given context.<br>*/<br>public static LayoutInflater from(Context context) {<br> LayoutInflater LayoutInflater =<pre><code>(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+</code></pre> if (LayoutInflater == null) {<pre><code>throw new AssertionError(&quot;LayoutInflater not found.&quot;);
+</code></pre> }<br> return LayoutInflater;<br>}<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">通过上面的代码可以发现，这种方式核心也是使用getSystemService() 方式获取的！</div><div class="line"></div><div class="line">3. 使用getLayoutInflater()</div><div class="line">在Activity或是Fragment中可以通过getLayoutInflater()来获取LayoutInflater,如下是其实现原理：</div><div class="line">Activity getLayoutInflater()源码</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>// Activity<br>/**</p>
+<ul>
+<li>Convenience for calling</li>
+<li>{@link android.view.Window#getLayoutInflater}.<br>*/<br>@NonNull<br>public LayoutInflater getLayoutInflater() {<br> return getWindow().getLayoutInflater();<br>}<br>public PhoneWindow(Context context) {<br> super(context);<br> mLayoutInflater = LayoutInflater.from(context);<br>}<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Fragment getLayoutInflater()源码:</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>// Fragment<br>/**</p>
+<ul>
+<li>Hack so that DialogFragment can make its Dialog before creating</li>
+<li>its views, and the view construction can use the dialog’s context for</li>
+<li>inflation.  Maybe this should become a public API. Note sure.</li>
+<li>@hide<br><em>/<br>@RestrictTo(LIBRARY_GROUP)<br>public LayoutInflater getLayoutInflater(Bundle savedInstanceState) {<br> LayoutInflater result = mHost.onGetLayoutInflater();<br> getChildFragmentManager(); // Init if needed; use raw implementation below.<br> LayoutInflaterCompat.setFactory(result, mChildFragmentManager.getLayoutInflaterFactory());<br> return result;<br>}<br>// FragmentHostCallback<br>/*</em></li>
+<li>Return a {@link LayoutInflater}.</li>
+<li>See {@link Activity#getLayoutInflater()}.<br>*/<br>public LayoutInflater onGetLayoutInflater() {<br> return (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);<br>}  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">getLayoutInflater()这种方式底层同样使用的是getSystemService的方式实现的！</div><div class="line"></div><div class="line">**&lt;font color=#ff4500&gt;由上可知，不论哪种方式获取LayoutInflater,其本质都是使用context.getSystemService()实现的！&lt;/font&gt;**</div><div class="line"></div><div class="line">## LayoutInflater中inflate方法参数解析</div><div class="line">inflate有四个重载的方法，如下所示：</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>public View inflate (int resource, ViewGroup root)<br>public View inflate (XmlPullParser parser, ViewGroup root)<br>public View inflate (XmlPullParser parser, ViewGroup root, boolean attachToRoot)<br>public View inflate (int resource, ViewGroup root, boolean attachToRoot)<br>```<br>这里主要说下最后一上重载方法参数的含义：<br>resource 不必多说，就是layout资源ID；<br>root 指的是将要加载布局的根视图；<br>attachToRoot 指的是这个View是否需要root中，即View是否会被加载到root中；</p>
+<p><strong><font color="#ff4500">如果后面attachToRoot为true的时候，这个布局会被解析并加载到root下面；<br>如果为false,则会依照root去解析该xml并返回view,但是这个view不会被加载到root里，即将xml解析了，并依照root的类型给生成的view 设置一个LayoutParams，但不将其add到root里</font></strong>  </p>
+<p><a href="http://blog.csdn.net/qq_26263231/article/details/54137624" target="_blank" rel="external">实例</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-01T06:25:24.000Z"><a href="/2017/03/01/Android应用退出方式总结/">2017-03-01</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/03/01/Android应用退出方式总结/">Android应用退出方式总结</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="容器式"><a href="#容器式" class="headerlink" title="容器式"></a>容器式</h2><p>新建一个容器，存放所有打开的Activity。在程序注销或需要退出时，循环finish打开的activity。以将所有页面<br>Activity关闭。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">import android.app.Activity;</div><div class="line">import android.os.Bundle;</div><div class="line"></div><div class="line">public class BaseActivity extends Activity &#123;</div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        // 添加Activity到堆栈</div><div class="line">        AtyContainer.getInstance().addActivity(this);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onDestroy() &#123;</div><div class="line">        super.onDestroy();</div><div class="line">        // 结束Activity&amp;从栈中移除该Activity</div><div class="line">        AtyContainer.getInstance().removeActivity(this);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">class AtyContainer &#123;</div><div class="line"></div><div class="line">    private AtyContainer() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static AtyContainer instance = new AtyContainer();</div><div class="line">    private static List&lt;Activity&gt; activityStack = new ArrayList&lt;Activity&gt;();</div><div class="line"></div><div class="line">    public static AtyContainer getInstance() &#123;</div><div class="line">        return instance;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void addActivity(Activity aty) &#123;</div><div class="line">        activityStack.add(aty);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void removeActivity(Activity aty) &#123;</div><div class="line">        activityStack.remove(aty);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 结束所有Activity</div><div class="line">     */</div><div class="line">    public void finishAllActivity() &#123;</div><div class="line">        for (int i = 0, size = activityStack.size(); i &lt; size; i++) &#123;</div><div class="line">            if (null != activityStack.get(i)) &#123;</div><div class="line">                activityStack.get(i).finish();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        activityStack.clear();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这种方法比较简单，但是可以看到activityStack持有这Activity的强引用，也就是说当某个Activity异常退出时，<br>activityStack没有即使释放掉引用，可能会导致内存问题</p>
+<h2 id="广播式"><a href="#广播式" class="headerlink" title="广播式"></a>广播式</h2><p>这种方式比容器式稍好，它是在退出时发送一个退出广播。在Activity收到广播后后进页面finish。因此我们需要<br>在Activity中注册广播，为了减少代码编写，可以将此功能放到Activity基类中进行处理。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">public class BaseActivity extends Activity &#123;</div><div class="line"></div><div class="line">    private static final String EXITACTION = &quot;action.exit&quot;;</div><div class="line"></div><div class="line">    private ExitReceiver exitReceiver = new ExitReceiver();</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        IntentFilter filter = new IntentFilter();</div><div class="line">        filter.addAction(EXITACTION);</div><div class="line">        registerReceiver(exitReceiver, filter);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onDestroy() &#123;</div><div class="line">        super.onDestroy();</div><div class="line">        unregisterReceiver(exitReceiver);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    class ExitReceiver extends BroadcastReceiver &#123;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public void onReceive(Context context, Intent intent) &#123;</div><div class="line">            BaseActivity.this.finish();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="进程式"><a href="#进程式" class="headerlink" title="进程式"></a>进程式</h2><p>这种方式比较粗爆，在退出时杀掉应用进程。但是这种方式不好，在不同的rom上会引发出不同的问题<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">android.os.Process.killProcess(android.os.Process.myPid());</div><div class="line"></div><div class="line"></div><div class="line">System.exit(0);</div><div class="line"></div><div class="line"></div><div class="line">ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);</div><div class="line">manager.killBackgroundProcesses(getPackageName());</div></pre></td></tr></table></figure></p>
+<h2 id="RS-式"><a href="#RS-式" class="headerlink" title="RS 式"></a>RS 式</h2><p>RS即Receiver + SingleTask。Activity有四种加载模式，而singleTask就是其中的一种，使用这个模式之后，<br>当startActivity时，它先会在当前栈中查询是否存在Activity的实例，如果存在，则将其至于栈顶，并将其之上<br>的所有Activity移除栈。我们打开一个app，首先是一个splash页面，然后会finish掉splash页面。跳转到主页。<br>然后会在主页进行N次的跳转，期间会产生数量不定的Activity，有的被销毁，有的驻留在栈中，但是栈底永远是<br>我们的HomeActivity。这样就让问题变得简单很多了，我们只需如下两步：</p>
+<ol>
+<li>在HomeActivity注册一个退出广播，和第二个广播式一样，但是这里只需要在HomeActivity一个页面注册即可。</li>
+<li>设置HomeActivity的启动模式为singleTask。</li>
+</ol>
+<p>当我们需要退出的时候只需要startActivity(this,HomeActivity,class)， 再发送一个退出广播。上面代码首先<br>会把栈中HomeActivity之上的所有Activity移除出栈，然后接到广播finish自己。一切OK ! 没有弹框，不用考虑<br>机型Rom适配</p>
+<h2 id="SingleTask-式"><a href="#SingleTask-式" class="headerlink" title="SingleTask 式"></a>SingleTask 式</h2><p>上面的RS式注册广播略显麻烦，这里有一种更简单的方式，思路也很简单。</p>
+<ol>
+<li><p>设置MainActivity的加载模式为singleTask  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android:launchMode=&quot;singleTask&quot;</div></pre></td></tr></table></figure>
+</li>
+<li><p>重写MainActivity中的onNewIntent方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">private static final String TAG_EXIT = &quot;exit&quot;;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onNewIntent(Intent intent) &#123;</div><div class="line">        super.onNewIntent(intent);</div><div class="line">        if (intent != null) &#123;</div><div class="line">            boolean isExit = intent.getBooleanExtra(TAG_EXIT, false);</div><div class="line">            if (isExit) &#123;</div><div class="line">                this.finish();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>需要退出时在Intent中添加退出的tag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Intent intent = new Intent(this,MainActivity.class);</div><div class="line">intent.putExtra(MainActivity.TAG_EXIT, true);</div><div class="line">startActivity(intent);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="懒人式"><a href="#懒人式" class="headerlink" title="懒人式"></a>懒人式</h2><p>这种方式只适合在Home页面退出。这种方式更加简单，只需要如下两步操作：</p>
+<ol>
+<li>将MainActivity设置为singleTask</li>
+<li>将退出出口放置在MainActivity</li>
+</ol>
+<p>然后双击back退出</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+
+<nav id="pagination">
+  
+    <a href="/" class="alignleft prev">Vorherige Seite</a>
+  
+  
+  <div class="clearfix"></div>
+</nav></div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Suche">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Kategorien</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Android-Crash/">Android-Crash</a><small>5</small></li>
+  
+    <li><a href="/categories/Android-Note/">Android-Note</a><small>11</small></li>
+  
+    <li><a href="/categories/Android架构/">Android架构</a><small>1</small></li>
+  
+    <li><a href="/categories/UI绘制/">UI绘制</a><small>1</small></li>
+  
+    <li><a href="/categories/pjsip/">pjsip</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Activity/">Activity</a><small>6</small></li>
+  
+    <li><a href="/tags/Provider/">Provider</a><small>1</small></li>
+  
+    <li><a href="/tags/Toast/">Toast</a><small>1</small></li>
+  
+    <li><a href="/tags/View/">View</a><small>1</small></li>
+  
+    <li><a href="/tags/aar/">aar</a><small>1</small></li>
+  
+    <li><a href="/tags/button/">button</a><small>1</small></li>
+  
+    <li><a href="/tags/click/">click</a><small>1</small></li>
+  
+    <li><a href="/tags/jar/">jar</a><small>2</small></li>
+  
+    <li><a href="/tags/jni/">jni</a><small>1</small></li>
+  
+    <li><a href="/tags/listview/">listview</a><small>1</small></li>
+  
+    <li><a href="/tags/pjsip/">pjsip</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 John Doe
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

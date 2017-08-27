@@ -1,0 +1,237 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Activity退出方式总结 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="容器式新建一个容器，存放所有打开的Activity。在程序注销或需要退出时，循环finish打开的activity。以将所有页面Activity关闭。123456789101112131415161718192021222324252627282930313233343536373839404142">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Activity退出方式总结"/>
+  <meta property="og:site_name" content="Hexo"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Hexo</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-04-25T13:44:24.000Z"><a href="/2017/04/25/Activity退出方式总结/">2017-04-25</a></time>
+      
+      
+  
+    <h1 class="title">Activity退出方式总结</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="容器式"><a href="#容器式" class="headerlink" title="容器式"></a>容器式</h2><p>新建一个容器，存放所有打开的Activity。在程序注销或需要退出时，循环finish打开的activity。以将所有页面<br>Activity关闭。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">import android.app.Activity;</div><div class="line">import android.os.Bundle;</div><div class="line"></div><div class="line">public class BaseActivity extends Activity &#123;</div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        // 添加Activity到堆栈</div><div class="line">        AtyContainer.getInstance().addActivity(this);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onDestroy() &#123;</div><div class="line">        super.onDestroy();</div><div class="line">        // 结束Activity&amp;从栈中移除该Activity</div><div class="line">        AtyContainer.getInstance().removeActivity(this);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">class AtyContainer &#123;</div><div class="line"></div><div class="line">    private AtyContainer() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static AtyContainer instance = new AtyContainer();</div><div class="line">    private static List&lt;Activity&gt; activityStack = new ArrayList&lt;Activity&gt;();</div><div class="line"></div><div class="line">    public static AtyContainer getInstance() &#123;</div><div class="line">        return instance;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void addActivity(Activity aty) &#123;</div><div class="line">        activityStack.add(aty);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void removeActivity(Activity aty) &#123;</div><div class="line">        activityStack.remove(aty);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 结束所有Activity</div><div class="line">     */</div><div class="line">    public void finishAllActivity() &#123;</div><div class="line">        for (int i = 0, size = activityStack.size(); i &lt; size; i++) &#123;</div><div class="line">            if (null != activityStack.get(i)) &#123;</div><div class="line">                activityStack.get(i).finish();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        activityStack.clear();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这种方法比较简单，但是可以看到activityStack持有这Activity的强引用，也就是说当某个Activity异常退出时，<br>activityStack没有即使释放掉引用，可能会导致内存问题</p>
+<h2 id="广播式"><a href="#广播式" class="headerlink" title="广播式"></a>广播式</h2><p>这种方式比容器式稍好，它是在退出时发送一个退出广播。在Activity收到广播后后进页面finish。因此我们需要<br>在Activity中注册广播，为了减少代码编写，可以将此功能放到Activity基类中进行处理。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">public class BaseActivity extends Activity &#123;</div><div class="line"></div><div class="line">    private static final String EXITACTION = &quot;action.exit&quot;;</div><div class="line"></div><div class="line">    private ExitReceiver exitReceiver = new ExitReceiver();</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        IntentFilter filter = new IntentFilter();</div><div class="line">        filter.addAction(EXITACTION);</div><div class="line">        registerReceiver(exitReceiver, filter);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onDestroy() &#123;</div><div class="line">        super.onDestroy();</div><div class="line">        unregisterReceiver(exitReceiver);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    class ExitReceiver extends BroadcastReceiver &#123;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public void onReceive(Context context, Intent intent) &#123;</div><div class="line">            BaseActivity.this.finish();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="进程式"><a href="#进程式" class="headerlink" title="进程式"></a>进程式</h2><p>这种方式比较粗爆，在退出时杀掉应用进程。但是这种方式不好，在不同的rom上会引发出不同的问题<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">android.os.Process.killProcess(android.os.Process.myPid());</div><div class="line"></div><div class="line"></div><div class="line">System.exit(0);</div><div class="line"></div><div class="line"></div><div class="line">ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);</div><div class="line">manager.killBackgroundProcesses(getPackageName());</div></pre></td></tr></table></figure></p>
+<h2 id="RS-式"><a href="#RS-式" class="headerlink" title="RS 式"></a>RS 式</h2><p>RS即Receiver + SingleTask。Activity有四种加载模式，而singleTask就是其中的一种，使用这个模式之后，<br>当startActivity时，它先会在当前栈中查询是否存在Activity的实例，如果存在，则将其至于栈顶，并将其之上<br>的所有Activity移除栈。我们打开一个app，首先是一个splash页面，然后会finish掉splash页面。跳转到主页。<br>然后会在主页进行N次的跳转，期间会产生数量不定的Activity，有的被销毁，有的驻留在栈中，但是栈底永远是<br>我们的HomeActivity。这样就让问题变得简单很多了，我们只需如下两步：</p>
+<ol>
+<li>在HomeActivity注册一个退出广播，和第二个广播式一样，但是这里只需要在HomeActivity一个页面注册即可。</li>
+<li>设置HomeActivity的启动模式为singleTask。</li>
+</ol>
+<p>当我们需要退出的时候只需要startActivity(this,HomeActivity,class)， 再发送一个退出广播。上面代码首先<br>会把栈中HomeActivity之上的所有Activity移除出栈，然后接到广播finish自己。一切OK ! 没有弹框，不用考虑<br>机型Rom适配</p>
+<h2 id="SingleTask-式"><a href="#SingleTask-式" class="headerlink" title="SingleTask 式"></a>SingleTask 式</h2><p>上面的RS式注册广播略显麻烦，这里有一种更简单的方式，思路也很简单。</p>
+<ol>
+<li><p>设置MainActivity的加载模式为singleTask  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android:launchMode=&quot;singleTask&quot;</div></pre></td></tr></table></figure>
+</li>
+<li><p>重写MainActivity中的onNewIntent方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">private static final String TAG_EXIT = &quot;exit&quot;;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onNewIntent(Intent intent) &#123;</div><div class="line">        super.onNewIntent(intent);</div><div class="line">        if (intent != null) &#123;</div><div class="line">            boolean isExit = intent.getBooleanExtra(TAG_EXIT, false);</div><div class="line">            if (isExit) &#123;</div><div class="line">                this.finish();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>需要退出时在Intent中添加退出的tag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Intent intent = new Intent(this,MainActivity.class);</div><div class="line">intent.putExtra(MainActivity.TAG_EXIT, true);</div><div class="line">startActivity(intent);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="懒人式"><a href="#懒人式" class="headerlink" title="懒人式"></a>懒人式</h2><p>这种方式只适合在Home页面退出。这种方式更加简单，只需要如下两步操作：</p>
+<ol>
+<li>将MainActivity设置为singleTask</li>
+<li>将退出出口放置在MainActivity</li>
+</ol>
+<p>然后双击back退出</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Android-Note/">Android-Note</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/Activity/">Activity</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Kommentare</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://yoursite.com/2017/04/25/Activity退出方式总结/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Suche">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Kategorien</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Android-Crash/">Android-Crash</a><small>5</small></li>
+  
+    <li><a href="/categories/Android-Note/">Android-Note</a><small>11</small></li>
+  
+    <li><a href="/categories/Android架构/">Android架构</a><small>1</small></li>
+  
+    <li><a href="/categories/UI绘制/">UI绘制</a><small>1</small></li>
+  
+    <li><a href="/categories/pjsip/">pjsip</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Activity/">Activity</a><small>6</small></li>
+  
+    <li><a href="/tags/Provider/">Provider</a><small>1</small></li>
+  
+    <li><a href="/tags/Toast/">Toast</a><small>1</small></li>
+  
+    <li><a href="/tags/View/">View</a><small>1</small></li>
+  
+    <li><a href="/tags/aar/">aar</a><small>1</small></li>
+  
+    <li><a href="/tags/button/">button</a><small>1</small></li>
+  
+    <li><a href="/tags/click/">click</a><small>1</small></li>
+  
+    <li><a href="/tags/jar/">jar</a><small>2</small></li>
+  
+    <li><a href="/tags/jni/">jni</a><small>1</small></li>
+  
+    <li><a href="/tags/listview/">listview</a><small>1</small></li>
+  
+    <li><a href="/tags/pjsip/">pjsip</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 John Doe
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

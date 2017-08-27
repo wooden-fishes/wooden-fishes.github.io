@@ -1,0 +1,242 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>LayoutInflater使用 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="作用在日常开发中，会常用（Fragment）LayoutInflater这个类来加载layout布局文件，并返回对应的View对象！
+获得LayoutInflater的三种方式
+使用context.getSystemService()方式获得123456LayoutInflater localinf">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="LayoutInflater使用"/>
+  <meta property="og:site_name" content="Hexo"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Hexo</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-01T06:32:24.000Z"><a href="/2017/03/01/LayoutInflater使用/">2017-03-01</a></time>
+      
+      
+  
+    <h1 class="title">LayoutInflater使用</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><p>在日常开发中，会常用（Fragment）LayoutInflater这个类来加载layout布局文件，并返回对应的View对象！</p>
+<h2 id="获得LayoutInflater的三种方式"><a href="#获得LayoutInflater的三种方式" class="headerlink" title="获得LayoutInflater的三种方式"></a>获得LayoutInflater的三种方式</h2><ol>
+<li>使用context.getSystemService()方式获得<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">LayoutInflater localinflater =</div><div class="line">        (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);</div><div class="line">``` </div><div class="line"></div><div class="line">2. 使用LayoutInflater.from(context)方式</div><div class="line">其实现原码为：</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>/**</p>
+<ul>
+<li>Obtains the LayoutInflater from the given context.<br>*/<br>public static LayoutInflater from(Context context) {<br> LayoutInflater LayoutInflater =<pre><code>(LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+</code></pre> if (LayoutInflater == null) {<pre><code>throw new AssertionError(&quot;LayoutInflater not found.&quot;);
+</code></pre> }<br> return LayoutInflater;<br>}<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">通过上面的代码可以发现，这种方式核心也是使用getSystemService() 方式获取的！</div><div class="line"></div><div class="line">3. 使用getLayoutInflater()</div><div class="line">在Activity或是Fragment中可以通过getLayoutInflater()来获取LayoutInflater,如下是其实现原理：</div><div class="line">Activity getLayoutInflater()源码</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>// Activity<br>/**</p>
+<ul>
+<li>Convenience for calling</li>
+<li>{@link android.view.Window#getLayoutInflater}.<br>*/<br>@NonNull<br>public LayoutInflater getLayoutInflater() {<br> return getWindow().getLayoutInflater();<br>}<br>public PhoneWindow(Context context) {<br> super(context);<br> mLayoutInflater = LayoutInflater.from(context);<br>}<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Fragment getLayoutInflater()源码:</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>// Fragment<br>/**</p>
+<ul>
+<li>Hack so that DialogFragment can make its Dialog before creating</li>
+<li>its views, and the view construction can use the dialog’s context for</li>
+<li>inflation.  Maybe this should become a public API. Note sure.</li>
+<li>@hide<br><em>/<br>@RestrictTo(LIBRARY_GROUP)<br>public LayoutInflater getLayoutInflater(Bundle savedInstanceState) {<br> LayoutInflater result = mHost.onGetLayoutInflater();<br> getChildFragmentManager(); // Init if needed; use raw implementation below.<br> LayoutInflaterCompat.setFactory(result, mChildFragmentManager.getLayoutInflaterFactory());<br> return result;<br>}<br>// FragmentHostCallback<br>/*</em></li>
+<li>Return a {@link LayoutInflater}.</li>
+<li>See {@link Activity#getLayoutInflater()}.<br>*/<br>public LayoutInflater onGetLayoutInflater() {<br> return (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);<br>}  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">getLayoutInflater()这种方式底层同样使用的是getSystemService的方式实现的！</div><div class="line"></div><div class="line">**&lt;font color=#ff4500&gt;由上可知，不论哪种方式获取LayoutInflater,其本质都是使用context.getSystemService()实现的！&lt;/font&gt;**</div><div class="line"></div><div class="line">## LayoutInflater中inflate方法参数解析</div><div class="line">inflate有四个重载的方法，如下所示：</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>public View inflate (int resource, ViewGroup root)<br>public View inflate (XmlPullParser parser, ViewGroup root)<br>public View inflate (XmlPullParser parser, ViewGroup root, boolean attachToRoot)<br>public View inflate (int resource, ViewGroup root, boolean attachToRoot)<br>```<br>这里主要说下最后一上重载方法参数的含义：<br>resource 不必多说，就是layout资源ID；<br>root 指的是将要加载布局的根视图；<br>attachToRoot 指的是这个View是否需要root中，即View是否会被加载到root中；</p>
+<p><strong><font color="#ff4500">如果后面attachToRoot为true的时候，这个布局会被解析并加载到root下面；<br>如果为false,则会依照root去解析该xml并返回view,但是这个view不会被加载到root里，即将xml解析了，并依照root的类型给生成的view 设置一个LayoutParams，但不将其add到root里</font></strong>  </p>
+<p><a href="http://blog.csdn.net/qq_26263231/article/details/54137624" target="_blank" rel="external">实例</a></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/UI绘制/">UI绘制</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/View/">View</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Kommentare</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://yoursite.com/2017/03/01/LayoutInflater使用/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Suche">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Kategorien</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Android-Crash/">Android-Crash</a><small>5</small></li>
+  
+    <li><a href="/categories/Android-Note/">Android-Note</a><small>11</small></li>
+  
+    <li><a href="/categories/Android架构/">Android架构</a><small>1</small></li>
+  
+    <li><a href="/categories/UI绘制/">UI绘制</a><small>1</small></li>
+  
+    <li><a href="/categories/pjsip/">pjsip</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Activity/">Activity</a><small>6</small></li>
+  
+    <li><a href="/tags/Provider/">Provider</a><small>1</small></li>
+  
+    <li><a href="/tags/Toast/">Toast</a><small>1</small></li>
+  
+    <li><a href="/tags/View/">View</a><small>1</small></li>
+  
+    <li><a href="/tags/aar/">aar</a><small>1</small></li>
+  
+    <li><a href="/tags/button/">button</a><small>1</small></li>
+  
+    <li><a href="/tags/click/">click</a><small>1</small></li>
+  
+    <li><a href="/tags/jar/">jar</a><small>2</small></li>
+  
+    <li><a href="/tags/jni/">jni</a><small>1</small></li>
+  
+    <li><a href="/tags/listview/">listview</a><small>1</small></li>
+  
+    <li><a href="/tags/pjsip/">pjsip</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 John Doe
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

@@ -50,25 +50,412 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2017-08-27T02:44:07.000Z"><a href="/2017/08/27/hello-world/">2017-08-27</a></time>
+        <time datetime="2017-04-25T13:48:24.000Z"><a href="/2017/04/25/Android在锁屏状态下弹出Activity并点亮屏幕/">2017-04-25</a></time>
       
       
   
-    <h1 class="title"><a href="/2017/08/27/hello-world/">Hello World</a></h1>
+    <h1 class="title"><a href="/2017/04/25/Android在锁屏状态下弹出Activity并点亮屏幕/">Android在锁屏状态下弹出Activity并点亮屏幕</a></h1>
   
 
     </header>
     <div class="entry">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>Android 在锁屏状态中，有些情况下需要有较强的提示，这里仅仅使用通知栏不够，例如 来电，闹钟 等等。</p>
+<p>要实现这种功能很简单，只需要Activity中配置相应的WindowFlags即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |</div><div class="line">WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);</div></pre></td></tr></table></figure></p>
+<p>其中<br>FLAG_SHOW_WHEN_LOCKED 表示此Activity在锁屏的时候也可以显示出来；<br>FLAG_TURN_SCREEN_ON 表示显示此Window时把屏幕点亮；</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-04-25T13:44:24.000Z"><a href="/2017/04/25/Activity退出方式总结/">2017-04-25</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/04/25/Activity退出方式总结/">Activity退出方式总结</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="容器式"><a href="#容器式" class="headerlink" title="容器式"></a>容器式</h2><p>新建一个容器，存放所有打开的Activity。在程序注销或需要退出时，循环finish打开的activity。以将所有页面<br>Activity关闭。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">import android.app.Activity;</div><div class="line">import android.os.Bundle;</div><div class="line"></div><div class="line">public class BaseActivity extends Activity &#123;</div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        // 添加Activity到堆栈</div><div class="line">        AtyContainer.getInstance().addActivity(this);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onDestroy() &#123;</div><div class="line">        super.onDestroy();</div><div class="line">        // 结束Activity&amp;从栈中移除该Activity</div><div class="line">        AtyContainer.getInstance().removeActivity(this);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">class AtyContainer &#123;</div><div class="line"></div><div class="line">    private AtyContainer() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static AtyContainer instance = new AtyContainer();</div><div class="line">    private static List&lt;Activity&gt; activityStack = new ArrayList&lt;Activity&gt;();</div><div class="line"></div><div class="line">    public static AtyContainer getInstance() &#123;</div><div class="line">        return instance;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void addActivity(Activity aty) &#123;</div><div class="line">        activityStack.add(aty);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void removeActivity(Activity aty) &#123;</div><div class="line">        activityStack.remove(aty);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 结束所有Activity</div><div class="line">     */</div><div class="line">    public void finishAllActivity() &#123;</div><div class="line">        for (int i = 0, size = activityStack.size(); i &lt; size; i++) &#123;</div><div class="line">            if (null != activityStack.get(i)) &#123;</div><div class="line">                activityStack.get(i).finish();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        activityStack.clear();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这种方法比较简单，但是可以看到activityStack持有这Activity的强引用，也就是说当某个Activity异常退出时，<br>activityStack没有即使释放掉引用，可能会导致内存问题</p>
+<h2 id="广播式"><a href="#广播式" class="headerlink" title="广播式"></a>广播式</h2><p>这种方式比容器式稍好，它是在退出时发送一个退出广播。在Activity收到广播后后进页面finish。因此我们需要<br>在Activity中注册广播，为了减少代码编写，可以将此功能放到Activity基类中进行处理。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">public class BaseActivity extends Activity &#123;</div><div class="line"></div><div class="line">    private static final String EXITACTION = &quot;action.exit&quot;;</div><div class="line"></div><div class="line">    private ExitReceiver exitReceiver = new ExitReceiver();</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        IntentFilter filter = new IntentFilter();</div><div class="line">        filter.addAction(EXITACTION);</div><div class="line">        registerReceiver(exitReceiver, filter);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onDestroy() &#123;</div><div class="line">        super.onDestroy();</div><div class="line">        unregisterReceiver(exitReceiver);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    class ExitReceiver extends BroadcastReceiver &#123;</div><div class="line"></div><div class="line">        @Override</div><div class="line">        public void onReceive(Context context, Intent intent) &#123;</div><div class="line">            BaseActivity.this.finish();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="进程式"><a href="#进程式" class="headerlink" title="进程式"></a>进程式</h2><p>这种方式比较粗爆，在退出时杀掉应用进程。但是这种方式不好，在不同的rom上会引发出不同的问题<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">android.os.Process.killProcess(android.os.Process.myPid());</div><div class="line"></div><div class="line"></div><div class="line">System.exit(0);</div><div class="line"></div><div class="line"></div><div class="line">ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);</div><div class="line">manager.killBackgroundProcesses(getPackageName());</div></pre></td></tr></table></figure></p>
+<h2 id="RS-式"><a href="#RS-式" class="headerlink" title="RS 式"></a>RS 式</h2><p>RS即Receiver + SingleTask。Activity有四种加载模式，而singleTask就是其中的一种，使用这个模式之后，<br>当startActivity时，它先会在当前栈中查询是否存在Activity的实例，如果存在，则将其至于栈顶，并将其之上<br>的所有Activity移除栈。我们打开一个app，首先是一个splash页面，然后会finish掉splash页面。跳转到主页。<br>然后会在主页进行N次的跳转，期间会产生数量不定的Activity，有的被销毁，有的驻留在栈中，但是栈底永远是<br>我们的HomeActivity。这样就让问题变得简单很多了，我们只需如下两步：</p>
+<ol>
+<li>在HomeActivity注册一个退出广播，和第二个广播式一样，但是这里只需要在HomeActivity一个页面注册即可。</li>
+<li>设置HomeActivity的启动模式为singleTask。</li>
+</ol>
+<p>当我们需要退出的时候只需要startActivity(this,HomeActivity,class)， 再发送一个退出广播。上面代码首先<br>会把栈中HomeActivity之上的所有Activity移除出栈，然后接到广播finish自己。一切OK ! 没有弹框，不用考虑<br>机型Rom适配</p>
+<h2 id="SingleTask-式"><a href="#SingleTask-式" class="headerlink" title="SingleTask 式"></a>SingleTask 式</h2><p>上面的RS式注册广播略显麻烦，这里有一种更简单的方式，思路也很简单。</p>
+<ol>
+<li><p>设置MainActivity的加载模式为singleTask  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android:launchMode=&quot;singleTask&quot;</div></pre></td></tr></table></figure>
+</li>
+<li><p>重写MainActivity中的onNewIntent方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">private static final String TAG_EXIT = &quot;exit&quot;;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onNewIntent(Intent intent) &#123;</div><div class="line">        super.onNewIntent(intent);</div><div class="line">        if (intent != null) &#123;</div><div class="line">            boolean isExit = intent.getBooleanExtra(TAG_EXIT, false);</div><div class="line">            if (isExit) &#123;</div><div class="line">                this.finish();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>需要退出时在Intent中添加退出的tag</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Intent intent = new Intent(this,MainActivity.class);</div><div class="line">intent.putExtra(MainActivity.TAG_EXIT, true);</div><div class="line">startActivity(intent);</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="懒人式"><a href="#懒人式" class="headerlink" title="懒人式"></a>懒人式</h2><p>这种方式只适合在Home页面退出。这种方式更加简单，只需要如下两步操作：</p>
+<ol>
+<li>将MainActivity设置为singleTask</li>
+<li>将退出出口放置在MainActivity</li>
+</ol>
+<p>然后双击back退出</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-19T13:57:46.000Z"><a href="/2017/03/19/DataBinding/">2017-03-19</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/03/19/DataBinding/"></a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>DataBinding 顾名思义就是数据绑定。它是谷歌最近提出的一种对于MVVM实现。MVVM是MVC架构的一种进化。它把MVC中的C层转换成了VM。VM也是一种Model,但是它相对于业务Model和数据Model，它是专门负责UI中需要展示的数据。DataBinding就是使用的ViewModel，它将数据源绑定到XML中</p>
+<h2 id="DataBinding优点"><a href="#DataBinding优点" class="headerlink" title="DataBinding优点"></a>DataBinding优点</h2><ol>
+<li>DataBinding可以提升开发效率<br> 去掉Activity &amp; Fragment中的部分UI代码；<br> XML变成UI的唯一真实来源；<br> 减少ViewID的定义；  </li>
+<li>功能强</li>
+<li>性能强<br> 自动生成代码，性能要超过手写代码，更加安全，很多问题会在编译期出现</li>
+</ol>
+<h2 id="DataBinding缺点"><a href="#DataBinding缺点" class="headerlink" title="DataBinding缺点"></a>DataBinding缺点</h2><ol>
+<li>错误信息不方便查看</li>
+<li>增加程序类的数量和方法数</li>
+</ol>
+<h2 id="启用DataBinding"><a href="#启用DataBinding" class="headerlink" title="启用DataBinding"></a>启用DataBinding</h2><p>在需要使用的Model的gradle文件中添加对DataBinding的支持<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">//...</div><div class="line">dataBinding &#123;</div><div class="line">    enabled = true</div><div class="line">&#125;</div><div class="line">//...</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<h2 id="DataBinding的基础用法"><a href="#DataBinding的基础用法" class="headerlink" title="DataBinding的基础用法"></a>DataBinding的基础用法</h2><ol>
+<li>修改layout文件<br>在原来的layout外面再套一个layout标签，并在其中添加data标签，如下所示<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;layout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;</div><div class="line">    &lt;data&gt;</div><div class="line">    &lt;/data&gt;</div><div class="line">    &lt;!--原先的根节点（Root Element）--&gt;</div><div class="line">    &lt;LinearLayout&gt;</div><div class="line">    ....</div><div class="line">    &lt;/LinearLayout&gt;</div><div class="line">&lt;/layout&gt;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>data标签下可以声明variable，variable中MVVM架构的重要一环，它做为桥梁，建立起了view和viewModel的联系。使ViewModel的数据能够展示到view上</p>
+<ol>
+<li><p>创建ViewModel<br>根据UI数据展示需要，创建model类，并生成get/set方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">//代码</div></pre></td></tr></table></figure>
+</li>
+<li><p>获取ViewBinding对象<br>获取ViewBinding对象一般使用DataBindingUtils取得</p>
+</li>
+<li><p>绑定Variable<br>将ViewModel数据绑定到XML中的variable，数据就会显示出来</p>
+</li>
+</ol>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-18T14:58:24.000Z"><a href="/2017/03/18/Activity全屏相关操作/">2017-03-18</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/03/18/Activity全屏相关操作/">Activity全屏相关操作</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="隐藏标题栏（titlebar）"><a href="#隐藏标题栏（titlebar）" class="headerlink" title="隐藏标题栏（titlebar）"></a>隐藏标题栏（titlebar）</h2><ol>
+<li><p>在代码中隐藏标题栏</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">requestWindowFeature(Window.FEATURE_NO_TITLE);</div></pre></td></tr></table></figure>
+</li>
+<li><p>在Manifest中Application或Activity中配置主题样式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android:theme=&quot;@android:style/Theme.NoTitleBar&quot;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="隐藏状态栏（statusbar）"><a href="#隐藏状态栏（statusbar）" class="headerlink" title="隐藏状态栏（statusbar）"></a>隐藏状态栏（statusbar）</h2><ol>
+<li><p>在Manifest中Activity中配置主题样式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">android:theme=&quot;@android:style/Theme.NoTitleBar.Fullscreen&quot;</div></pre></td></tr></table></figure>
+</li>
+<li><p>在代码中隐藏状态栏</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 隐藏状态栏</div><div class="line"> */</div><div class="line">private void hideStatusBar() &#123;</div><div class="line">    //定义全屏参数</div><div class="line">    int flag = WindowManager.LayoutParams.FLAG_FULLSCREEN;</div><div class="line">    //获得当前窗体对象</div><div class="line">    Window window = MainActivity.this.getWindow();</div><div class="line">    //设置当前窗体为全屏显示</div><div class="line">    window.setFlags(flag, flag);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="隐藏导航栏（NavigationBar）"><a href="#隐藏导航栏（NavigationBar）" class="headerlink" title="隐藏导航栏（NavigationBar）"></a>隐藏导航栏（NavigationBar）</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 隐藏导航栏,可返回</div><div class="line"> */</div><div class="line">private void hideNavigationBarCanBack() &#123;</div><div class="line">    View decorView = getWindow().getDecorView();</div><div class="line">    int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION</div><div class="line">           | View.SYSTEM_UI_FLAG_FULLSCREEN;</div><div class="line">    decorView.setSystemUiVisibility(uiOptions);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="同时隐藏状态栏和导航栏"><a href="#同时隐藏状态栏和导航栏" class="headerlink" title="同时隐藏状态栏和导航栏"></a>同时隐藏状态栏和导航栏</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 隐藏导航栏</div><div class="line"> */</div><div class="line">public void hideNavigationBarAndStatusBar() &#123;</div><div class="line">    int uiFlags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE</div><div class="line">            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION</div><div class="line">            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN</div><div class="line">            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION // hide nav bar</div><div class="line">            | View.SYSTEM_UI_FLAG_FULLSCREEN; // hide status bar</div><div class="line"></div><div class="line">    if (android.os.Build.VERSION.SDK_INT &gt;= 19) &#123;</div><div class="line">        //SYSTEM_UI_FLAG_IMMERSIVE_STICKY: hide navigation bars - compatibility: building API level is lower thatn 19, use magic number directly for higher API target level</div><div class="line">            uiFlags |= 0x00001000;</div><div class="line">    &#125; else &#123;</div><div class="line">        uiFlags |= View.SYSTEM_UI_FLAG_LOW_PROFILE;</div><div class="line">    &#125;</div><div class="line">    getWindow().getDecorView().setSystemUiVisibility(uiFlags);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="动态全屏与退出"><a href="#动态全屏与退出" class="headerlink" title="动态全屏与退出"></a>动态全屏与退出</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">/**</div><div class="line"> * 动态设置全屏</div><div class="line"> */</div><div class="line">private void dynamicFullScreen()&#123;</div><div class="line">    WindowManager.LayoutParams attrs = getWindow().getAttributes();</div><div class="line">    attrs.flags |= WindowManager.LayoutParams.FLAG_FULLSCREEN;</div><div class="line">    getWindow().setAttributes(attrs);</div><div class="line">    getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);</div><div class="line">&#125;</div><div class="line"></div><div class="line">/**</div><div class="line"> * 动态退出全屏</div><div class="line"> */</div><div class="line">private void dynamicExitFullScreen()&#123;</div><div class="line">    WindowManager.LayoutParams attrs = getWindow().getAttributes();</div><div class="line">    attrs.flags &amp;= (~WindowManager.LayoutParams.FLAG_FULLSCREEN);</div><div class="line">    getWindow().setAttributes(attrs);</div><div class="line">    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-18T14:35:24.000Z"><a href="/2017/03/18/修改jar中的class文件/">2017-03-18</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/03/18/修改jar中的class文件/">修改jar中的class文件</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>在工作中有可能会遇到需要修改jar的情况。正常情况下，如果有源代码的话，就比较容易，直接修改源代码，再<br>导出新的jar文件即可。但是如果没有源代码就比较麻烦了，下面记录了没有源代码的情况修改jar的方法和步骤：</p>
+<h4 id="打开jar文件"><a href="#打开jar文件" class="headerlink" title="打开jar文件"></a>打开jar文件</h4><p>使用jd-gui或eclipse打开jar中的class文件。</p>
+<h4 id="生成java文件"><a href="#生成java文件" class="headerlink" title="生成java文件"></a>生成java文件</h4><p>在Eclipse中新建project，然后添加对应的java文件（包名类名需与jar中的一致），并将步骤1中打开的class文件的内容，复制过来。</p>
+<h4 id="添加缺失引用"><a href="#添加缺失引用" class="headerlink" title="添加缺失引用"></a>添加缺失引用</h4><p>复制过来的class文件有很多引用是缺失的，在新建的project中添加引用资源，引用内容不用实现。尽量不要动待修改的class文件。</p>
+<h4 id="修改代码"><a href="#修改代码" class="headerlink" title="修改代码"></a>修改代码</h4><p>解决掉引用问题，可以修改代码，实现自已想要的需求。</p>
+<h4 id="生成class"><a href="#生成class" class="headerlink" title="生成class"></a>生成class</h4><p>将修改的java文件编译生成class文件。</p>
+<h4 id="将class文件打包进jar"><a href="#将class文件打包进jar" class="headerlink" title="将class文件打包进jar"></a>将class文件打包进jar</h4><p>将生成好的class文件打包进jar，并替换掉之前的class文件（可使用命令：jar uvf test.jar com/test/test.class ）</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-18T14:30:24.000Z"><a href="/2017/03/18/Activity保持长亮/">2017-03-18</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/03/18/Activity保持长亮/">Activity保持长亮</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>方式1<br>this.powerManager = (PowerManager) this .getSystemService(Context.POWER_SERVICE);<br>this.wakeLock = this.powerManager.newWakeLock( PowerManager.FULL_WAKE_LOCK, “My Lock”);<br>//保持常亮 this.wakeLock.acquire();<br>//释放 this.wakeLock.release();</p>
+<p>方式2<br>getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);<br>清除时使用clearFlags</p>
+<p>方式3 androidmanifest中配置<br>这个设置android:keepScreenOn=”true”等同于FLAG_KEEP_SCREEN_ON。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-18T14:30:24.000Z"><a href="/2017/03/18/更改Activity亮度/">2017-03-18</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/03/18/更改Activity亮度/">更改Activity亮度</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>有些需求需进入到页面后更改Activity的亮度，退出页面后恢复到之前的亮度。通过更改<br>WindowManager.LayoutParams的screenBrightness可以达到这个效果。screenBrightness<br>的默认取值为-1。screenBrightness的有效取值范围为0-1，当其值小于0时，即使用默认屏幕亮度。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">WindowManager.LayoutParams wl = getWindow().getAttributes();</div><div class="line">wl.screenBrightness = 0.5f;</div><div class="line">getWindow().setAttributes(wl);</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-18T14:09:24.000Z"><a href="/2017/03/18/Android方法数查看/">2017-03-18</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/03/18/Android方法数查看/">Android 方法数查看</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="网站"><a href="#网站" class="headerlink" title="网站"></a>网站</h2><p><a href="&quot;https://inloop.github.io/apk-method-count/&quot;">APK method count</a><br>拖拽APK到网页上，稍后即可将其每个模块的方法数显示出来；</p>
+<p><a href="&quot;http://www.methodscount.com/&quot;">methodscount</a><br>可以搜索查出项目中使用的或要使用的Library的方法数，可以在引入Library进行查看，可以根据结果看是否要使<br>用此library；</p>
+<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p><a href="&quot;https://github.com/google/android-classyshark&quot;">Classyshark</a><br>直接使用java jar 启用，可方便查看apk,dex等中每个包的方法数及使用了哪些开源库，并以饼状图展示出来，非<br>常直观；</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">dexdump -f app.apk | grep method_ids_size</div></pre></td></tr></table></figure>
+<p>dexdump是Android SDK自带的工具，位于build-tools目录下</p>
+<h2 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h2><p><a href="&quot;http://www.methodscount.com/&quot;">methodscount</a><br>这个是AS中的插件</p>
+<p><a href="&quot;https://github.com/KeepSafe/dexcount-gradle-plugin&quot;">dexcount-gradle-plugin</a><br>在Gradle中集成此library，在每次打包后都可以看到APK包的方法数比较方</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-12T13:02:24.000Z"><a href="/2017/03/12/Android动态库找不到/">2017-03-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/03/12/Android动态库找不到/">Android动态库找不到</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="错误信息"><a href="#错误信息" class="headerlink" title="错误信息"></a>错误信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">Process: com.android.demo, PID: 6260</div><div class="line">java.lang.UnsatisfiedLinkError: dalvik.system.PathClassLoader[DexPathList[[zip file &quot;/data/app/com.</div><div class="line">android.demo-1/base.apk&quot;],nativeLibraryDirectories=[/data/app/com.android.demo-1/lib/arm64,</div><div class="line">/data/app/com.android.demo-1/base.apk!/lib/arm64-v8a, /vendor/lib64, /system/lib64]]]</div><div class="line">couldn&apos;t find &quot;libphonesdk.so&quot;</div><div class="line">   at java.lang.Runtime.loadLibrary(Runtime.java:367)</div><div class="line">   at java.lang.System.loadLibrary(System.java:1076)</div><div class="line">   at com.ctrip.basebiz.cti.phonesdk.PhoneSdkNative.&lt;clinit&gt;(PhoneSdkNative.java:17)</div><div class="line">   at com.ctrip.basebiz.cti.phonesdk.PhoneSdkClient.&lt;init&gt;(PhoneSdkClient.java:28)</div><div class="line">   at ctrip.android.xcall.business.manager.VoipManager.&lt;init&gt;(VoipManager.java:76)</div><div class="line">   at ctrip.android.xcall.business.manager.VoipManager.getInstance(VoipManager.java:69)</div><div class="line">   at ctrip.android.xcall.ui.activity.SplashActivity.onCreate(SplashActivity.java:24)</div><div class="line">   at android.app.Activity.performCreate(Activity.java:6303)</div><div class="line">   at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1108)</div><div class="line">   at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2376)</div><div class="line">   at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:2483)</div><div class="line">   at android.app.ActivityThread.access$900(ActivityThread.java:153)</div><div class="line">   at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1349)</div><div class="line">   at android.os.Handler.dispatchMessage(Handler.java:102)</div><div class="line">   at android.os.Looper.loop(Looper.java:148)</div><div class="line">   at android.app.ActivityThread.main(ActivityThread.java:5441)</div><div class="line">   at java.lang.reflect.Method.invoke(Native Method)</div><div class="line">   at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:738)</div><div class="line">   at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:628)</div></pre></td></tr></table></figure>
+<h2 id="错误原因"><a href="#错误原因" class="headerlink" title="错误原因"></a>错误原因</h2><p>上面错误日志中的 couldn’t find “libphonesdk.so” 道出了错误原因：没有找到需要的 .so 文件。继续分析上<br>面的日志，发现其分别会从 “lib/arm64”, “lib/arm64-v8a”, “/vendor/lib64”, “/system/lib64” 这几个目录中<br>进行查找。显然这几个目录是没有的，理所当然不会找到！</p>
+<p>armeabi 针对的是旧的arm v5 cpu, armeabi-v7a是针对有浮点运算或高级扩展功能的arm v7 cpu。armeabi 和<br>armeabi-v7a是类似的指令集，后者是前者的增强类型，在运行速度，效率上有所的高。这两种都是32位指令集。<br>可以相互兼容。<br>arm64-v8a 即是比v7更新的64位架构处理器，这种架构中包含两个执行状态aarch32和aarch64。所以这种处理器<br>可以支持32位的 so。</p>
+<p>那为什么上面不查找我的armeabi 和 armeabi-v7a目录呢？<br>这是因为Android 查找 so 是有规则的！<br>Android4.x, 只要能找到so，就可以运行，so可以在armeabi,armeabi-v7a, arm64-v8a，so位置可以很随意；<br>Android5.x，检查更加严格，会只有和芯片型号对应目录的so会安装到手机中（当没有与其型号对应的目录会将<br>armeabi 等32 位的so安装进去）；<br>Android6.x，检查更加严格；<br>Android7.x，执行更严格的安全检查，禁止使用系统目录的内容。所以如果希望在7.x以上版本，需要把系统目录<br>的libsqlite.so拷贝出来，也放在自己app对应指令目录下；</p>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>知道了上面的错误原因，解决起来就比较简单，这里有两个解决方案：</p>
+<ol>
+<li>创建与cpu型号对应的目录，然后将其对应的 so 放进去；</li>
+<li>修改build.gradle文件，设置支持的动态库架构；<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ndk &#123;</div><div class="line">    // 设置支持的SO库架构</div><div class="line">    abiFilters &apos;armeabi&apos; , &apos;arm64-v8a&apos; //, &apos;x86&apos;, &apos;armeabi-v7a&apos;, &apos;x86_64&apos;, &apos;arm64-v8a&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><p>查看设备的CPU架构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">adb shell</div><div class="line">cat /proc/cpuinfo</div></pre></td></tr></table></figure></p>
+<p>然后看其最上面一行的 Processor 信息。<br>我的CPU信息是：Processor : AArch64 Processor rev 4 (aarch64) 显然是64位的(aarch32是armv7, aarch64是<br>armv8)，这样也就不难理解为什么上面查找的几个目录都是64位的。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+        
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+
+
+  <article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-12T13:01:24.000Z"><a href="/2017/03/12/子线程中使用Toast出错/">2017-03-12</a></time>
+      
+      
+  
+    <h1 class="title"><a href="/2017/03/12/子线程中使用Toast出错/">子线程中使用Toast出错</a></h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>##错误信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">java.lang.RuntimeException: Can&apos;t create handler inside thread that has not called Looper.prepare()                  	 at android.os.Handler.&lt;init&gt;(Handler.java:200)                            </div><div class="line">	at android.os.Handler.&lt;init&gt;(Handler.java:114)                             </div><div class="line">	at android.widget.Toast$TN.&lt;init&gt;(Toast.java:345) </div><div class="line">	at android.widget.Toast.&lt;init&gt;(Toast.java:101) </div><div class="line">	at android.widget.Toast.makeText(Toast.java:259)                          </div><div class="line">	at demo.permission.example.com.MainActivity$1.run(MainActivity.java:22) </div><div class="line">    at java.lang.Thread.run(Thread.java:818)</div></pre></td></tr></table></figure></p>
+<p>##错误原因<br>从日志看，错误是使用Handler和Looper出错，使用Handler时并没有对Looper进行初始化。但是我并没有创建使用Handler，我仅仅只是使用了Toast。仅仅只是在子线程中写了一句：<br>Toast.makeText(MainActivity.this, “test”, Toast.LENGTH_LONG).show();<br>通过翻看源码，Toast的show和hide方法的实现是基于Handler机制。但是其代码中只初始化了Handler:<br>final Handler mHandler = new Handler();<br>并没有初始化Looper的方法（Looper.perpare()和Looper.loop()），说明Toast使用的Handler是当前调用的线程的Looper。所以，当我们在主线程（也就是UI线程中）可以随意调用Toast.makeText方法，因为Android系统帮我们实现了主线程的Looper初始化。但是我们是在子线程中调用的，同时初始化Looper，因此出现此错误<br><a href="http://www.2cto.com/kf/201502/374764.html" target="_blank" rel="external">http://www.2cto.com/kf/201502/374764.html</a></p>
+<p>##解决办法<br>在待使用的子线程中初始化Looper。具体实现的方式为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Looper.prepare(); </div><div class="line">Toast.makeText(getApplicationContext(), &quot;test&quot;, Toast.LENGTH_LONG).show(); </div><div class="line">Looper.loop();</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -89,6 +476,8 @@
 <nav id="pagination">
   
   
+    <a href="/page/2/" class="alignright next">Nächste Seite</a>
+  
   <div class="clearfix"></div>
 </nav></div></div>
     <aside id="sidebar" class="alignright">
@@ -100,8 +489,54 @@
 </div>
 
   
+<div class="widget tag">
+  <h3 class="title">Kategorien</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Android-Crash/">Android-Crash</a><small>5</small></li>
+  
+    <li><a href="/categories/Android-Note/">Android-Note</a><small>11</small></li>
+  
+    <li><a href="/categories/Android架构/">Android架构</a><small>1</small></li>
+  
+    <li><a href="/categories/UI绘制/">UI绘制</a><small>1</small></li>
+  
+    <li><a href="/categories/pjsip/">pjsip</a><small>1</small></li>
+  
+  </ul>
+</div>
+
 
   
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Activity/">Activity</a><small>6</small></li>
+  
+    <li><a href="/tags/Provider/">Provider</a><small>1</small></li>
+  
+    <li><a href="/tags/Toast/">Toast</a><small>1</small></li>
+  
+    <li><a href="/tags/View/">View</a><small>1</small></li>
+  
+    <li><a href="/tags/aar/">aar</a><small>1</small></li>
+  
+    <li><a href="/tags/button/">button</a><small>1</small></li>
+  
+    <li><a href="/tags/click/">click</a><small>1</small></li>
+  
+    <li><a href="/tags/jar/">jar</a><small>2</small></li>
+  
+    <li><a href="/tags/jni/">jni</a><small>1</small></li>
+  
+    <li><a href="/tags/listview/">listview</a><small>1</small></li>
+  
+    <li><a href="/tags/pjsip/">pjsip</a><small>1</small></li>
+  
+  </ul>
+</div>
+
 </aside>
     <div class="clearfix"></div>
   </div>

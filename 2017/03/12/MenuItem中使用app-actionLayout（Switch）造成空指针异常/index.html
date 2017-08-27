@@ -1,0 +1,208 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>MenuItem中使用app:actionLayout（Switch）造成空指针异常 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="使用情况：MenuItem中使用了app:actionLayout123456789101112&amp;lt;menu xmlns:android=&amp;quot;http://schemas.android.com/apk/res/android&amp;quot;    xmlns:app=&amp;quot;http:">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="MenuItem中使用app:actionLayout（Switch）造成空指针异常"/>
+  <meta property="og:site_name" content="Hexo"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Hexo</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-12T07:50:24.000Z"><a href="/2017/03/12/MenuItem中使用app-actionLayout（Switch）造成空指针异常/">2017-03-12</a></time>
+      
+      
+  
+    <h1 class="title">MenuItem中使用app:actionLayout（Switch）造成空指针异常</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="使用情况："><a href="#使用情况：" class="headerlink" title="使用情况："></a>使用情况：</h2><p>MenuItem中使用了app:actionLayout<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;menu xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</div><div class="line">    xmlns:tools=&quot;http://schemas.android.com/tools&quot;</div><div class="line">    tools:context=&quot;com.example.nfcdemo.MainActivity&quot;&gt;</div><div class="line"></div><div class="line">    &lt;item</div><div class="line">        android:id=&quot;@+id/action_open_close_nfc&quot;</div><div class="line">        android:orderInCategory=&quot;100&quot;</div><div class="line">        android:title=&quot;&quot;</div><div class="line">        app:actionLayout=&quot;@layout/menu_switch&quot;</div><div class="line">        app:showAsAction=&quot;always&quot; /&gt; </div><div class="line">&lt;/menu&gt;</div></pre></td></tr></table></figure></p>
+<p>menu_switch对应的布局中包含了一个Switch控件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</div><div class="line">&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">   android:layout_width=&quot;match_parent&quot;</div><div class="line">   android:layout_height=&quot;match_parent&quot;</div><div class="line">   &gt;</div><div class="line">    &lt;Switch</div><div class="line">       android:id=&quot;@+id/switchForActionBar&quot;</div><div class="line">       android:layout_width=&quot;wrap_content&quot;</div><div class="line">       android:layout_height=&quot;wrap_content&quot;</div><div class="line">       android:layout_centerInParent=&quot;true&quot;</div><div class="line">       android:text=&quot;&quot;</div><div class="line">       android:checked=&quot;false&quot;</div><div class="line">       android:theme=&quot;@style/ThemeOverlay.SwitchBar&quot;</div><div class="line">       /&gt;</div><div class="line"></div><div class="line">&lt;/RelativeLayout&gt;</div></pre></td></tr></table></figure></p>
+<p>##错误原因<br>直接使用错误方式（findViewById）获取Switch，导致获取失败，使用时空指针异常</p>
+<p>##解决办法<br>使用正确的方式（menu–&gt;menuitem–&gt;actionview–&gt;switch）获取Switch<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">@Override</div><div class="line">public boolean onCreateOptionsMenu(Menu menu) &#123;</div><div class="line">    // Inflate the menu; this adds items to the action bar if it is present.</div><div class="line">    getMenuInflater().inflate(R.menu.menu_main, menu);</div><div class="line">    MenuItem switchItem = menu.findItem(R.id.action_open_close_nfc);</div><div class="line">   mSwitch = (Switch) switchItem.getActionView().findViewById(R.id.switchForActionBar);</div><div class="line">    if (mNfcAdapter != null) &#123;</div><div class="line">        mSwitch.setChecked(mNfcAdapter.isEnabled());</div><div class="line">    &#125;</div><div class="line">    return true;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Android-Crash/">Android-Crash</a>
+  </div>
+
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Kommentare</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://yoursite.com/2017/03/12/MenuItem中使用app-actionLayout（Switch）造成空指针异常/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Suche">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Kategorien</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Android-Crash/">Android-Crash</a><small>5</small></li>
+  
+    <li><a href="/categories/Android-Note/">Android-Note</a><small>11</small></li>
+  
+    <li><a href="/categories/Android架构/">Android架构</a><small>1</small></li>
+  
+    <li><a href="/categories/UI绘制/">UI绘制</a><small>1</small></li>
+  
+    <li><a href="/categories/pjsip/">pjsip</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Activity/">Activity</a><small>6</small></li>
+  
+    <li><a href="/tags/Provider/">Provider</a><small>1</small></li>
+  
+    <li><a href="/tags/Toast/">Toast</a><small>1</small></li>
+  
+    <li><a href="/tags/View/">View</a><small>1</small></li>
+  
+    <li><a href="/tags/aar/">aar</a><small>1</small></li>
+  
+    <li><a href="/tags/button/">button</a><small>1</small></li>
+  
+    <li><a href="/tags/click/">click</a><small>1</small></li>
+  
+    <li><a href="/tags/jar/">jar</a><small>2</small></li>
+  
+    <li><a href="/tags/jni/">jni</a><small>1</small></li>
+  
+    <li><a href="/tags/listview/">listview</a><small>1</small></li>
+  
+    <li><a href="/tags/pjsip/">pjsip</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 John Doe
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

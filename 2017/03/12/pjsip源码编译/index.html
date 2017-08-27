@@ -1,0 +1,250 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>pjsip源码编译 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="环境配置
+搭建Android NDK(我使用的是android-ndk-r10)编译环境
+搭建SWIG环境，SWIG依赖PCRE，需先下载安装PCRE下载PCRE解压缩软件包
+1tar -xvf pcre.tar.gz
+执行命令安装
+123sudo ./configure --prefix=/opt">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="pjsip源码编译"/>
+  <meta property="og:site_name" content="Hexo"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Hexo</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-12T07:48:24.000Z"><a href="/2017/03/12/pjsip源码编译/">2017-03-12</a></time>
+      
+      
+  
+    <h1 class="title">pjsip源码编译</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><ol>
+<li>搭建Android NDK(我使用的是<a href="&quot;http://dl.google.com/android/ndk/android-ndk-r10e-darwin-x86_64.bin&quot;">android-ndk-r10</a>)编译环境</li>
+<li><p>搭建SWIG环境，SWIG依赖PCRE，需先下载安装PCRE<br>下载<a href="&quot;https://nchc.dl.sourceforge.net/project/pcre/pcre/8.39/pcre-8.39.tar.gz&quot;">PCRE</a><br>解压缩软件包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar -xvf pcre.tar.gz</div></pre></td></tr></table></figure>
+<p>执行命令安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo ./configure --prefix=/opt/pcre</div><div class="line">sudo make</div><div class="line">sudo make install</div></pre></td></tr></table></figure>
+<p>下载<a href="&quot;https://nchc.dl.sourceforge.net/project/swig/swig/swig-3.0.11/swig-3.0.11.tar.gz&quot;">SWIG</a><br>解压缩软件包</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">tar -xvf pcre.tar.gz</div></pre></td></tr></table></figure>
+<p>执行命令安装</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo  ./configure --with-pcre-prefix=/opt/pcre</div><div class="line">sudo make</div><div class="line">sudo make install</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="编译准备"><a href="#编译准备" class="headerlink" title="编译准备"></a>编译准备</h2><ol>
+<li>下载PJSIP源码</li>
+<li><p>在pjproject/pjlib/include/pj/目录下新建config_site.h文件并添加如下内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">/* Activate Android specific settings in the &apos;config_site_sample.h&apos; */</div><div class="line">#define PJ_CONFIG_ANDROID 1</div><div class="line">#include &lt;pj/config_site_sample.h&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>修改configure-android文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ANDROID_NDK_ROOT=&quot;/Users/xx/Library/android-ndk-r10e&quot;</div><div class="line">APP_PLATFORM=&quot;android-21&quot;</div><div class="line">TARGET_ABI=&quot;armeabi&quot;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>##开始编译</p>
+<ol>
+<li><p>进入pjsip目录</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd /path/to/your/pjsip/dir</div></pre></td></tr></table></figure>
+</li>
+<li><p>执行configure</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./configure-android</div></pre></td></tr></table></figure>
+</li>
+<li><p>make</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make dep &amp;&amp; make clean &amp;&amp; make</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>##编译 telnet 接口的 pjsua 库<br> 进入到pjsip-apps/src/pjsua/android目录下，执行ndk-build<br> <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ cd /path/to/your/pjsip/dir</div><div class="line">$ cd pjsip-apps/src/pjsua/android</div><div class="line">$ ndk-build</div></pre></td></tr></table></figure></p>
+<p>##编译 pjsua2 示例应用<br>  进入$PJDIR/pjsip-apps/src/swig目录下执行make, 生成测试代码和libpjsua2.so<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$ cd /path/to/your/pjsip/dir</div><div class="line">$ cd pjsip-apps/src/swig</div><div class="line">$ make</div></pre></td></tr></table></figure></p>
+<p>##创建自已的 pjsua2 应用<br>  新建Android工程;将$PJDIR/pjsip-apps/src/swig目录下的代码和so拷贝<br>  到新建工程中；<br>  <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">$ cd $YOUR_PROJECT_DIR</div><div class="line">$ cp -r $PJSIP_DIR/pjsip-apps/src/swig/java/android/src .</div><div class="line"></div><div class="line">$ cd $YOUR_PROJECT_DIR</div><div class="line">$ cp -r $PJSIP_DIR/pjsip-apps/src/swig/java/android/libs .</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/pjsip/">pjsip</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/pjsip/">pjsip</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Kommentare</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://yoursite.com/2017/03/12/pjsip源码编译/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Suche">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Kategorien</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Android-Crash/">Android-Crash</a><small>5</small></li>
+  
+    <li><a href="/categories/Android-Note/">Android-Note</a><small>11</small></li>
+  
+    <li><a href="/categories/Android架构/">Android架构</a><small>1</small></li>
+  
+    <li><a href="/categories/UI绘制/">UI绘制</a><small>1</small></li>
+  
+    <li><a href="/categories/pjsip/">pjsip</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Activity/">Activity</a><small>6</small></li>
+  
+    <li><a href="/tags/Provider/">Provider</a><small>1</small></li>
+  
+    <li><a href="/tags/Toast/">Toast</a><small>1</small></li>
+  
+    <li><a href="/tags/View/">View</a><small>1</small></li>
+  
+    <li><a href="/tags/aar/">aar</a><small>1</small></li>
+  
+    <li><a href="/tags/button/">button</a><small>1</small></li>
+  
+    <li><a href="/tags/click/">click</a><small>1</small></li>
+  
+    <li><a href="/tags/jar/">jar</a><small>2</small></li>
+  
+    <li><a href="/tags/jni/">jni</a><small>1</small></li>
+  
+    <li><a href="/tags/listview/">listview</a><small>1</small></li>
+  
+    <li><a href="/tags/pjsip/">pjsip</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 John Doe
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

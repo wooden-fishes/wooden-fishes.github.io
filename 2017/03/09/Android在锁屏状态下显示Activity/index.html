@@ -3,15 +3,16 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Hello World | Hexo</title>
+  <title>Android在锁屏状态下弹出Activity! | Hexo</title>
   <meta name="author" content="John Doe">
   
-  <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in ">
+  <meta name="description" content="Android 在锁屏状态中，有些情况下需要有较强的提示，这里仅仅使用通知栏不够，例如 来电，闹钟 等等。
+要实现这种功能很简单，只需要Activity中配置相应的WindowFlags即可：12getWindow().addFlags(WindowManager.LayoutParams.FLAG">
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <meta property="og:title" content="Hello World"/>
+  <meta property="og:title" content="Android在锁屏状态下弹出Activity!"/>
   <meta property="og:site_name" content="Hexo"/>
 
   
@@ -51,32 +52,36 @@
     <header>
       
         <div class="icon"></div>
-        <time datetime="2017-08-27T02:44:07.000Z"><a href="/2017/08/27/hello-world/">2017-08-27</a></time>
+        <time datetime="2017-03-09T15:11:24.000Z"><a href="/2017/03/09/Android在锁屏状态下显示Activity/">2017-03-09</a></time>
       
       
   
-    <h1 class="title">Hello World</h1>
+    <h1 class="title">Android在锁屏状态下弹出Activity!</h1>
   
 
     </header>
     <div class="entry">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>Android 在锁屏状态中，有些情况下需要有较强的提示，这里仅仅使用通知栏不够，例如 来电，闹钟 等等。</p>
+<p>要实现这种功能很简单，只需要Activity中配置相应的WindowFlags即可：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED |</div><div class="line">WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);</div></pre></td></tr></table></figure></p>
+<p>其中<br>FLAG_SHOW_WHEN_LOCKED 表示此Activity在锁屏的时候也可以显示出来；<br>FLAG_TURN_SCREEN_ON 表示显示此Window时把屏幕点亮；</p>
 
       
     </div>
     <footer>
       
         
+  
+  <div class="categories">
+    <a href="/categories/Android-Note/">Android-Note</a>
+  </div>
+
         
+  
+  <div class="tags">
+    <a href="/tags/Activity/">Activity</a>
+  </div>
+
         
   <div class="addthis addthis_toolbox addthis_default_style">
     
@@ -117,7 +122,7 @@
   }(document, 'script', 'facebook-jssdk'));
 </script>
 
-<div class="fb-comments" data-href="http://yoursite.com/2017/08/27/hello-world/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+<div class="fb-comments" data-href="http://yoursite.com/2017/03/09/Android在锁屏状态下显示Activity/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
       
   
 </section>
@@ -132,8 +137,54 @@
 </div>
 
   
+<div class="widget tag">
+  <h3 class="title">Kategorien</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Android-Crash/">Android-Crash</a><small>5</small></li>
+  
+    <li><a href="/categories/Android-Note/">Android-Note</a><small>11</small></li>
+  
+    <li><a href="/categories/Android架构/">Android架构</a><small>1</small></li>
+  
+    <li><a href="/categories/UI绘制/">UI绘制</a><small>1</small></li>
+  
+    <li><a href="/categories/pjsip/">pjsip</a><small>1</small></li>
+  
+  </ul>
+</div>
+
 
   
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Activity/">Activity</a><small>6</small></li>
+  
+    <li><a href="/tags/Provider/">Provider</a><small>1</small></li>
+  
+    <li><a href="/tags/Toast/">Toast</a><small>1</small></li>
+  
+    <li><a href="/tags/View/">View</a><small>1</small></li>
+  
+    <li><a href="/tags/aar/">aar</a><small>1</small></li>
+  
+    <li><a href="/tags/button/">button</a><small>1</small></li>
+  
+    <li><a href="/tags/click/">click</a><small>1</small></li>
+  
+    <li><a href="/tags/jar/">jar</a><small>2</small></li>
+  
+    <li><a href="/tags/jni/">jni</a><small>1</small></li>
+  
+    <li><a href="/tags/listview/">listview</a><small>1</small></li>
+  
+    <li><a href="/tags/pjsip/">pjsip</a><small>1</small></li>
+  
+  </ul>
+</div>
+
 </aside>
     <div class="clearfix"></div>
   </div>

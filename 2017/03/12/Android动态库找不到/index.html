@@ -1,0 +1,221 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android动态库找不到 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="错误信息123456789101112131415161718192021222324Process: com.android.demo, PID: 6260java.lang.UnsatisfiedLinkError: dalvik.system.PathClassLoader[DexPathLi">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="Android动态库找不到"/>
+  <meta property="og:site_name" content="Hexo"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Hexo</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-12T13:02:24.000Z"><a href="/2017/03/12/Android动态库找不到/">2017-03-12</a></time>
+      
+      
+  
+    <h1 class="title">Android动态库找不到</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <h2 id="错误信息"><a href="#错误信息" class="headerlink" title="错误信息"></a>错误信息</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">Process: com.android.demo, PID: 6260</div><div class="line">java.lang.UnsatisfiedLinkError: dalvik.system.PathClassLoader[DexPathList[[zip file &quot;/data/app/com.</div><div class="line">android.demo-1/base.apk&quot;],nativeLibraryDirectories=[/data/app/com.android.demo-1/lib/arm64,</div><div class="line">/data/app/com.android.demo-1/base.apk!/lib/arm64-v8a, /vendor/lib64, /system/lib64]]]</div><div class="line">couldn&apos;t find &quot;libphonesdk.so&quot;</div><div class="line">   at java.lang.Runtime.loadLibrary(Runtime.java:367)</div><div class="line">   at java.lang.System.loadLibrary(System.java:1076)</div><div class="line">   at com.ctrip.basebiz.cti.phonesdk.PhoneSdkNative.&lt;clinit&gt;(PhoneSdkNative.java:17)</div><div class="line">   at com.ctrip.basebiz.cti.phonesdk.PhoneSdkClient.&lt;init&gt;(PhoneSdkClient.java:28)</div><div class="line">   at ctrip.android.xcall.business.manager.VoipManager.&lt;init&gt;(VoipManager.java:76)</div><div class="line">   at ctrip.android.xcall.business.manager.VoipManager.getInstance(VoipManager.java:69)</div><div class="line">   at ctrip.android.xcall.ui.activity.SplashActivity.onCreate(SplashActivity.java:24)</div><div class="line">   at android.app.Activity.performCreate(Activity.java:6303)</div><div class="line">   at android.app.Instrumentation.callActivityOnCreate(Instrumentation.java:1108)</div><div class="line">   at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:2376)</div><div class="line">   at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:2483)</div><div class="line">   at android.app.ActivityThread.access$900(ActivityThread.java:153)</div><div class="line">   at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1349)</div><div class="line">   at android.os.Handler.dispatchMessage(Handler.java:102)</div><div class="line">   at android.os.Looper.loop(Looper.java:148)</div><div class="line">   at android.app.ActivityThread.main(ActivityThread.java:5441)</div><div class="line">   at java.lang.reflect.Method.invoke(Native Method)</div><div class="line">   at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:738)</div><div class="line">   at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:628)</div></pre></td></tr></table></figure>
+<h2 id="错误原因"><a href="#错误原因" class="headerlink" title="错误原因"></a>错误原因</h2><p>上面错误日志中的 couldn’t find “libphonesdk.so” 道出了错误原因：没有找到需要的 .so 文件。继续分析上<br>面的日志，发现其分别会从 “lib/arm64”, “lib/arm64-v8a”, “/vendor/lib64”, “/system/lib64” 这几个目录中<br>进行查找。显然这几个目录是没有的，理所当然不会找到！</p>
+<p>armeabi 针对的是旧的arm v5 cpu, armeabi-v7a是针对有浮点运算或高级扩展功能的arm v7 cpu。armeabi 和<br>armeabi-v7a是类似的指令集，后者是前者的增强类型，在运行速度，效率上有所的高。这两种都是32位指令集。<br>可以相互兼容。<br>arm64-v8a 即是比v7更新的64位架构处理器，这种架构中包含两个执行状态aarch32和aarch64。所以这种处理器<br>可以支持32位的 so。</p>
+<p>那为什么上面不查找我的armeabi 和 armeabi-v7a目录呢？<br>这是因为Android 查找 so 是有规则的！<br>Android4.x, 只要能找到so，就可以运行，so可以在armeabi,armeabi-v7a, arm64-v8a，so位置可以很随意；<br>Android5.x，检查更加严格，会只有和芯片型号对应目录的so会安装到手机中（当没有与其型号对应的目录会将<br>armeabi 等32 位的so安装进去）；<br>Android6.x，检查更加严格；<br>Android7.x，执行更严格的安全检查，禁止使用系统目录的内容。所以如果希望在7.x以上版本，需要把系统目录<br>的libsqlite.so拷贝出来，也放在自己app对应指令目录下；</p>
+<h2 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h2><p>知道了上面的错误原因，解决起来就比较简单，这里有两个解决方案：</p>
+<ol>
+<li>创建与cpu型号对应的目录，然后将其对应的 so 放进去；</li>
+<li>修改build.gradle文件，设置支持的动态库架构；<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ndk &#123;</div><div class="line">    // 设置支持的SO库架构</div><div class="line">    abiFilters &apos;armeabi&apos; , &apos;arm64-v8a&apos; //, &apos;x86&apos;, &apos;armeabi-v7a&apos;, &apos;x86_64&apos;, &apos;arm64-v8a&apos;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ol>
+<h2 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h2><p>查看设备的CPU架构<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">adb shell</div><div class="line">cat /proc/cpuinfo</div></pre></td></tr></table></figure></p>
+<p>然后看其最上面一行的 Processor 信息。<br>我的CPU信息是：Processor : AArch64 Processor rev 4 (aarch64) 显然是64位的(aarch32是armv7, aarch64是<br>armv8)，这样也就不难理解为什么上面查找的几个目录都是64位的。</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Android-Crash/">Android-Crash</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/jni/">jni</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Kommentare</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://yoursite.com/2017/03/12/Android动态库找不到/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Suche">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Kategorien</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Android-Crash/">Android-Crash</a><small>5</small></li>
+  
+    <li><a href="/categories/Android-Note/">Android-Note</a><small>11</small></li>
+  
+    <li><a href="/categories/Android架构/">Android架构</a><small>1</small></li>
+  
+    <li><a href="/categories/UI绘制/">UI绘制</a><small>1</small></li>
+  
+    <li><a href="/categories/pjsip/">pjsip</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Activity/">Activity</a><small>6</small></li>
+  
+    <li><a href="/tags/Provider/">Provider</a><small>1</small></li>
+  
+    <li><a href="/tags/Toast/">Toast</a><small>1</small></li>
+  
+    <li><a href="/tags/View/">View</a><small>1</small></li>
+  
+    <li><a href="/tags/aar/">aar</a><small>1</small></li>
+  
+    <li><a href="/tags/button/">button</a><small>1</small></li>
+  
+    <li><a href="/tags/click/">click</a><small>1</small></li>
+  
+    <li><a href="/tags/jar/">jar</a><small>2</small></li>
+  
+    <li><a href="/tags/jni/">jni</a><small>1</small></li>
+  
+    <li><a href="/tags/listview/">listview</a><small>1</small></li>
+  
+    <li><a href="/tags/pjsip/">pjsip</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 John Doe
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

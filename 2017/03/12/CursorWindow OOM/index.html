@@ -1,0 +1,209 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>CursorWindow OOM | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="##错误信息123456789101108-30 20:27:36.751 E/CursorWindow(  760): Could not allocate CursorWindow &amp;apos;/data/data/com.android.providers.media/databases/ex">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="CursorWindow OOM"/>
+  <meta property="og:site_name" content="Hexo"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Hexo</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-12T07:44:24.000Z"><a href="/2017/03/12/CursorWindow OOM/">2017-03-12</a></time>
+      
+      
+  
+    <h1 class="title">CursorWindow OOM</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>##错误信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">08-30 20:27:36.751 E/CursorWindow(  760): Could not allocate CursorWindow &apos;/data/data/com.android.providers.media/databases/external.db&apos; of size 2097152 due to error -12.</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760): *** Uncaught remote exception!  (Exceptions are not yet supported across processes.)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760): android.database.CursorWindowAllocationException: Cursor window allocation of 2048 kb failed. # Open Cursors=781 (# cursors opened by pid 3105=781)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at android.database.CursorWindow.&lt;init&gt;(CursorWindow.java:104)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at android.database.AbstractWindowedCursor.clearOrCreateWindow(AbstractWindowedCursor.java:198)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at android.database.sqlite.SQLiteCursor.fillWindow(SQLiteCursor.java:162)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at android.database.sqlite.SQLiteCursor.getCount(SQLiteCursor.java:156)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at android.database.CursorToBulkCursorAdaptor.count(CursorToBulkCursorAdaptor.java:184)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at android.content.ContentProviderNative.onTransact(ContentProviderNative.java:117)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at android.os.Binder.execTransact(Binder.java:338)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at dalvik.system.NativeStart.run(Native Method)</div></pre></td></tr></table></figure></p>
+<p>##错误原因<br>CursorWindow缓存数据达到最大限制（2Ｍ不同的机器和SQLite版本其值可能不同）后，仍有查询结果集需要缓存，在申请内存分配时申请失败发生了OOM内存溢出；SQLite查询出的数据集cursor，都由native层的CursorWindow进行数据管理，包括内存空间的申请和数据的填充。CursorWindow实际上是共享内存的抽象，以实现跨进程，跨应用数据共享（ContentProvider作为数据通道，也支持跨进程，跨应用的数据访问）<br>在ContentProvider端透过SQLiteDatabase的封装查询到的数据集保存在CursorWindow所指向的共享内存中，然后通过Binder把这片共享内存传递到ContentResolver端，即查询端。这样客户就可以通过Cursor来访问这块共享内存中的数据集了。</p>
+<p>##解决办法<br>保证CursorWindow不会达到最大限制）：<br>1.只查询需要的字段；<br>     根据UI显示需要，或实际需要查询的字段进行查询，尽量不会表查询<br>2.二进制文件不要存在数据库中；<br>     数据库仅适用于保存一些较短文字，整数，布尔，浮点数等一些，易于查询和操作的轻量级的数据，目的也是在于快速搜索和查询。对于像图片，较长的文字（如文章）等大数据，最好直接以文件形式存储在硬盘中，然后在数据库保存它们的访问路径<br>3.对于大数据量的查询采用分段查询方式；<br>     无论表中的一条记录数据量如何的小，当条数达到5000级或者万级或者更多的时候，还是会达到最大的限制<br>4.正确的关闭Cursor，释放CursorWindow中不用的资源（需手动调用释放native中的资源，类似3.0之前的Bitmap需要手动释放。调用close的必要性：<a href="http://www.jianshu.com/p/3b433ed25aaf" target="_blank" rel="external">http://www.jianshu.com/p/3b433ed25aaf</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">     Cursor c;</div><div class="line">     try &#123; </div><div class="line">         c = queryCursor(); </div><div class="line">         int a = c.getInt(1); </div><div class="line">         ......</div><div class="line">         // 如果出错,后面的cursor.close()将不会执行</div><div class="line">         //c.close(); </div><div class="line">     &#125; catch (Exception e) &#123; </div><div class="line">     &#125; finally&#123;</div><div class="line">         if (c != null) &#123;</div><div class="line">             c.close();</div><div class="line">         &#125;</div><div class="line">     &#125;</div></pre></td></tr></table></figure></p>
+<p>如果你的Cursor需要在Activity的不同的生命周期方法中打开和关闭，那么一般可以这样做：<br>在onCreate()中打开，在onDestroy()中关闭；<br>在onStart() 中打开，在onStop() 中关闭；<br>在onResume()中打开，在onPause() 中关闭；<br>即要在成对的生命周期方法中打开/关闭</p>
+<p>如果程序中使用了CursorAdapter（例如Music），那么可以使用它的changeCursor(Cursor cursor)方法同时完成关闭旧Cursor使用新Cursor的操作</p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Android-Crash/">Android-Crash</a>
+  </div>
+
+        
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Kommentare</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://yoursite.com/2017/03/12/CursorWindow OOM/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Suche">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Kategorien</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Android-Crash/">Android-Crash</a><small>5</small></li>
+  
+    <li><a href="/categories/Android-Note/">Android-Note</a><small>11</small></li>
+  
+    <li><a href="/categories/Android架构/">Android架构</a><small>1</small></li>
+  
+    <li><a href="/categories/UI绘制/">UI绘制</a><small>1</small></li>
+  
+    <li><a href="/categories/pjsip/">pjsip</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Activity/">Activity</a><small>6</small></li>
+  
+    <li><a href="/tags/Provider/">Provider</a><small>1</small></li>
+  
+    <li><a href="/tags/Toast/">Toast</a><small>1</small></li>
+  
+    <li><a href="/tags/View/">View</a><small>1</small></li>
+  
+    <li><a href="/tags/aar/">aar</a><small>1</small></li>
+  
+    <li><a href="/tags/button/">button</a><small>1</small></li>
+  
+    <li><a href="/tags/click/">click</a><small>1</small></li>
+  
+    <li><a href="/tags/jar/">jar</a><small>2</small></li>
+  
+    <li><a href="/tags/jni/">jni</a><small>1</small></li>
+  
+    <li><a href="/tags/listview/">listview</a><small>1</small></li>
+  
+    <li><a href="/tags/pjsip/">pjsip</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 John Doe
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>

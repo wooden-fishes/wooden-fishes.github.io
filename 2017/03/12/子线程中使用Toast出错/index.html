@@ -1,0 +1,212 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>子线程中使用Toast出错 | Hexo</title>
+  <meta name="author" content="John Doe">
+  
+  <meta name="description" content="##错误信息1234567java.lang.RuntimeException: Can&amp;apos;t create handler inside thread that has not called Looper.prepare()                  	 at android.os">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="子线程中使用Toast出错"/>
+  <meta property="og:site_name" content="Hexo"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  <link href="/favicon.png" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  
+
+</head>
+
+
+<body>
+  <header id="header" class="inner"><div class="alignleft">
+  <h1><a href="/">Hexo</a></h1>
+  <h2><a href="/"></a></h2>
+</div>
+<nav id="main-nav" class="alignright">
+  <ul>
+    
+      <li><a href="/">Home</a></li>
+    
+      <li><a href="/archives">Archives</a></li>
+    
+  </ul>
+  <div class="clearfix"></div>
+</nav>
+<div class="clearfix"></div>
+</header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><article class="post">
+  
+  <div class="post-content">
+    <header>
+      
+        <div class="icon"></div>
+        <time datetime="2017-03-12T13:01:24.000Z"><a href="/2017/03/12/子线程中使用Toast出错/">2017-03-12</a></time>
+      
+      
+  
+    <h1 class="title">子线程中使用Toast出错</h1>
+  
+
+    </header>
+    <div class="entry">
+      
+        <p>##错误信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">java.lang.RuntimeException: Can&apos;t create handler inside thread that has not called Looper.prepare()                  	 at android.os.Handler.&lt;init&gt;(Handler.java:200)                            </div><div class="line">	at android.os.Handler.&lt;init&gt;(Handler.java:114)                             </div><div class="line">	at android.widget.Toast$TN.&lt;init&gt;(Toast.java:345) </div><div class="line">	at android.widget.Toast.&lt;init&gt;(Toast.java:101) </div><div class="line">	at android.widget.Toast.makeText(Toast.java:259)                          </div><div class="line">	at demo.permission.example.com.MainActivity$1.run(MainActivity.java:22) </div><div class="line">    at java.lang.Thread.run(Thread.java:818)</div></pre></td></tr></table></figure></p>
+<p>##错误原因<br>从日志看，错误是使用Handler和Looper出错，使用Handler时并没有对Looper进行初始化。但是我并没有创建使用Handler，我仅仅只是使用了Toast。仅仅只是在子线程中写了一句：<br>Toast.makeText(MainActivity.this, “test”, Toast.LENGTH_LONG).show();<br>通过翻看源码，Toast的show和hide方法的实现是基于Handler机制。但是其代码中只初始化了Handler:<br>final Handler mHandler = new Handler();<br>并没有初始化Looper的方法（Looper.perpare()和Looper.loop()），说明Toast使用的Handler是当前调用的线程的Looper。所以，当我们在主线程（也就是UI线程中）可以随意调用Toast.makeText方法，因为Android系统帮我们实现了主线程的Looper初始化。但是我们是在子线程中调用的，同时初始化Looper，因此出现此错误<br><a href="http://www.2cto.com/kf/201502/374764.html" target="_blank" rel="external">http://www.2cto.com/kf/201502/374764.html</a></p>
+<p>##解决办法<br>在待使用的子线程中初始化Looper。具体实现的方式为：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">Looper.prepare(); </div><div class="line">Toast.makeText(getApplicationContext(), &quot;test&quot;, Toast.LENGTH_LONG).show(); </div><div class="line">Looper.loop();</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer>
+      
+        
+  
+  <div class="categories">
+    <a href="/categories/Android-Crash/">Android-Crash</a>
+  </div>
+
+        
+  
+  <div class="tags">
+    <a href="/tags/Toast/">Toast</a>
+  </div>
+
+        
+  <div class="addthis addthis_toolbox addthis_default_style">
+    
+      <a class="addthis_button_facebook_like" fb:like:layout="button_count"></a>
+    
+    
+      <a class="addthis_button_tweet"></a>
+    
+    
+      <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+    
+    
+      <a class="addthis_button_pinterest_pinit" pi:pinit:layout="horizontal"></a>
+    
+    <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js"></script>
+
+      
+      <div class="clearfix"></div>
+    </footer>
+  </div>
+</article>
+
+
+<section id="comment">
+  <h1 class="title">Kommentare</h1>
+
+  
+      <div id="fb-root"></div>
+<script>
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/all.js#xfbml=1&appId=123456789012345";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+</script>
+
+<div class="fb-comments" data-href="http://yoursite.com/2017/03/12/子线程中使用Toast出错/index.html" data-num-posts="5" data-width="840" data-colorscheme="light"></div>
+      
+  
+</section>
+
+</div></div>
+    <aside id="sidebar" class="alignright">
+  <div class="search">
+  <form action="//google.com/search" method="get" accept-charset="utf-8">
+    <input type="search" name="q" results="0" placeholder="Suche">
+    <input type="hidden" name="q" value="site:yoursite.com">
+  </form>
+</div>
+
+  
+<div class="widget tag">
+  <h3 class="title">Kategorien</h3>
+  <ul class="entry">
+  
+    <li><a href="/categories/Android-Crash/">Android-Crash</a><small>5</small></li>
+  
+    <li><a href="/categories/Android-Note/">Android-Note</a><small>11</small></li>
+  
+    <li><a href="/categories/Android架构/">Android架构</a><small>1</small></li>
+  
+    <li><a href="/categories/UI绘制/">UI绘制</a><small>1</small></li>
+  
+    <li><a href="/categories/pjsip/">pjsip</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+
+  
+<div class="widget tag">
+  <h3 class="title">Tags</h3>
+  <ul class="entry">
+  
+    <li><a href="/tags/Activity/">Activity</a><small>6</small></li>
+  
+    <li><a href="/tags/Provider/">Provider</a><small>1</small></li>
+  
+    <li><a href="/tags/Toast/">Toast</a><small>1</small></li>
+  
+    <li><a href="/tags/View/">View</a><small>1</small></li>
+  
+    <li><a href="/tags/aar/">aar</a><small>1</small></li>
+  
+    <li><a href="/tags/button/">button</a><small>1</small></li>
+  
+    <li><a href="/tags/click/">click</a><small>1</small></li>
+  
+    <li><a href="/tags/jar/">jar</a><small>2</small></li>
+  
+    <li><a href="/tags/jni/">jni</a><small>1</small></li>
+  
+    <li><a href="/tags/listview/">listview</a><small>1</small></li>
+  
+    <li><a href="/tags/pjsip/">pjsip</a><small>1</small></li>
+  
+  </ul>
+</div>
+
+</aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><div class="alignleft">
+  
+  &copy; 2017 John Doe
+  
+</div>
+<div class="clearfix"></div></footer>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+</body>
+</html>
