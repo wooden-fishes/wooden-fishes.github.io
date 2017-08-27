@@ -3,61 +3,80 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Page 2 | Note</title>
+  <title>Page 2 | Develop Note</title>
+
+  
   <meta name="author" content="wooden-fishes">
   
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
   
-  <meta property="og:site_name" content="Note"/>
 
   
-    <meta property="og:image" content=""/>
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
   
 
-  <link href="/favicon.png" rel="icon">
-  <link rel="alternate" href="/atom.xml" title="Note" type="application/atom+xml">
+  <meta property="og:site_name" content="Develop Note"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Develop Note" type="application/atom+xml">
   <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
-  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-  
-
 </head>
 
 
 <body>
-  <header id="header" class="inner"><div class="alignleft">
-  <h1><a href="/">Note</a></h1>
-  <h2><a href="/"></a></h2>
-</div>
-<nav id="main-nav" class="alignright">
-  <ul>
-    
-      <li><a href="/">Home</a></li>
-    
-      <li><a href="/archives">Archives</a></li>
-    
-  </ul>
-  <div class="clearfix"></div>
-</nav>
-<div class="clearfix"></div>
-</header>
-  <div id="content" class="inner">
-    <div id="main-col" class="alignleft"><div id="wrapper">
-  <article class="post">
-  
-  <div class="post-content">
+<div class="blog">
+  <div class="content">
+
     <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Develop Note</a>
+    </h1>
+    <p class="site-description"></p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
       
-        <div class="icon"></div>
-        <time datetime="2017-03-12T12:36:24.000Z"><a href="/2017/03/12/Android快速点击导致多次执行的解决思路/">2017-03-12</a></time>
+        <li><a href="/">Home</a></li>
       
+        <li><a href="/archives">Archives</a></li>
       
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    
+  <article>
+
   
-    <h1 class="title"><a href="/2017/03/12/Android快速点击导致多次执行的解决思路/">Android快速点击导致多次执行的解决思路</a></h1>
+    
+    <h3 class="article-title"><a href="/2017/03/12/Android快速点击导致多次执行的解决思路/"><span>Android快速点击导致多次执行的解决思路</span></a></h3>
+    
   
 
-    </header>
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/03/12/Android快速点击导致多次执行的解决思路/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-03-12T12:36:24.000Z">
+          2017-03-12
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
     <div class="entry">
       
         <p>listview 的item点击过快的时候，会打开两个详情页面。button 在快速点击后也可能造成多次响应。解决问题的思路是，在点击后的一段时间内再次点击时不进行处理，即只响应首次点击。</p>
@@ -65,33 +84,60 @@
 
       
     </div>
-    <footer>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
       
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android-Note/">Android-Note</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/button/">button</a><a href="/tags/listview/">listview</a><a href="/tags/click/">click</a>
+    </span>
+    
+
+    </div>
+
+    
   </div>
 </article>
 
 
 
+  <article>
 
-  <article class="post">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2017-03-12T12:24:24.000Z"><a href="/2017/03/12/jar与aar的区别/">2017-03-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2017/03/12/jar与aar的区别/">jar与aar的区别</a></h1>
+    
+    <h3 class="article-title"><a href="/2017/03/12/jar与aar的区别/"><span>jar与aar的区别</span></a></h3>
+    
   
 
-    </header>
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/03/12/jar与aar的区别/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-03-12T12:24:24.000Z">
+          2017-03-12
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
     <div class="entry">
       
         <p>使用Android Studio对工程进行编译后，会同时生成jar与aar文件。</p>
@@ -107,33 +153,60 @@
 
       
     </div>
-    <footer>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
       
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android-Note/">Android-Note</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/jar/">jar</a><a href="/tags/aar/">aar</a>
+    </span>
+    
+
+    </div>
+
+    
   </div>
 </article>
 
 
 
+  <article>
 
-  <article class="post">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2017-03-12T07:52:24.000Z"><a href="/2017/03/12/INSTALL FAILED CONFLICTING PROVIDER/">2017-03-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2017/03/12/INSTALL FAILED CONFLICTING PROVIDER/">INSTALL FAILED CONFLICTING PROVIDER</a></h1>
+    
+    <h3 class="article-title"><a href="/2017/03/12/INSTALL FAILED CONFLICTING PROVIDER/"><span>INSTALL FAILED CONFLICTING PROVIDER</span></a></h3>
+    
   
 
-    </header>
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/03/12/INSTALL FAILED CONFLICTING PROVIDER/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-03-12T07:52:24.000Z">
+          2017-03-12
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
     <div class="entry">
       
         <p>##出错信息<br>安装应用程序时出错：INSTALL FAILED CONFLICTING PROVIDER</p>
@@ -143,33 +216,60 @@
 
       
     </div>
-    <footer>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
       
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android-Crash/">Android-Crash</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Provider/">Provider</a>
+    </span>
+    
+
+    </div>
+
+    
   </div>
 </article>
 
 
 
+  <article>
 
-  <article class="post">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2017-03-12T07:50:24.000Z"><a href="/2017/03/12/MenuItem中使用app-actionLayout（Switch）造成空指针异常/">2017-03-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2017/03/12/MenuItem中使用app-actionLayout（Switch）造成空指针异常/">MenuItem中使用app:actionLayout（Switch）造成空指针异常</a></h1>
+    
+    <h3 class="article-title"><a href="/2017/03/12/MenuItem中使用app-actionLayout（Switch）造成空指针异常/"><span>MenuItem中使用app:actionLayout（Switch）造成空指针异常</span></a></h3>
+    
   
 
-    </header>
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/03/12/MenuItem中使用app-actionLayout（Switch）造成空指针异常/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-03-12T07:50:24.000Z">
+          2017-03-12
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
     <div class="entry">
       
         <h2 id="使用情况："><a href="#使用情况：" class="headerlink" title="使用情况："></a>使用情况：</h2><p>MenuItem中使用了app:actionLayout<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;menu xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;</div><div class="line">    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;</div><div class="line">    xmlns:tools=&quot;http://schemas.android.com/tools&quot;</div><div class="line">    tools:context=&quot;com.example.nfcdemo.MainActivity&quot;&gt;</div><div class="line"></div><div class="line">    &lt;item</div><div class="line">        android:id=&quot;@+id/action_open_close_nfc&quot;</div><div class="line">        android:orderInCategory=&quot;100&quot;</div><div class="line">        android:title=&quot;&quot;</div><div class="line">        app:actionLayout=&quot;@layout/menu_switch&quot;</div><div class="line">        app:showAsAction=&quot;always&quot; /&gt; </div><div class="line">&lt;/menu&gt;</div></pre></td></tr></table></figure></p>
@@ -179,33 +279,53 @@
 
       
     </div>
-    <footer>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
       
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android-Crash/">Android-Crash</a>
+    </span>
+    
+
+    
+
+    </div>
+
+    
   </div>
 </article>
 
 
 
+  <article>
 
-  <article class="post">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2017-03-12T07:48:24.000Z"><a href="/2017/03/12/pjsip源码编译/">2017-03-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2017/03/12/pjsip源码编译/">pjsip源码编译</a></h1>
+    
+    <h3 class="article-title"><a href="/2017/03/12/pjsip源码编译/"><span>pjsip源码编译</span></a></h3>
+    
   
 
-    </header>
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/03/12/pjsip源码编译/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-03-12T07:48:24.000Z">
+          2017-03-12
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
     <div class="entry">
       
         <h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><ol>
@@ -247,33 +367,60 @@
 
       
     </div>
-    <footer>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
       
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/pjsip/">pjsip</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/pjsip/">pjsip</a>
+    </span>
+    
+
+    </div>
+
+    
   </div>
 </article>
 
 
 
+  <article>
 
-  <article class="post">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2017-03-12T07:44:24.000Z"><a href="/2017/03/12/CursorWindow OOM/">2017-03-12</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2017/03/12/CursorWindow OOM/">CursorWindow OOM</a></h1>
+    
+    <h3 class="article-title"><a href="/2017/03/12/CursorWindow OOM/"><span>CursorWindow OOM</span></a></h3>
+    
   
 
-    </header>
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/03/12/CursorWindow OOM/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-03-12T07:44:24.000Z">
+          2017-03-12
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
     <div class="entry">
       
         <p>##错误信息<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">08-30 20:27:36.751 E/CursorWindow(  760): Could not allocate CursorWindow &apos;/data/data/com.android.providers.media/databases/external.db&apos; of size 2097152 due to error -12.</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760): *** Uncaught remote exception!  (Exceptions are not yet supported across processes.)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760): android.database.CursorWindowAllocationException: Cursor window allocation of 2048 kb failed. # Open Cursors=781 (# cursors opened by pid 3105=781)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at android.database.CursorWindow.&lt;init&gt;(CursorWindow.java:104)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at android.database.AbstractWindowedCursor.clearOrCreateWindow(AbstractWindowedCursor.java:198)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at android.database.sqlite.SQLiteCursor.fillWindow(SQLiteCursor.java:162)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at android.database.sqlite.SQLiteCursor.getCount(SQLiteCursor.java:156)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at android.database.CursorToBulkCursorAdaptor.count(CursorToBulkCursorAdaptor.java:184)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at android.content.ContentProviderNative.onTransact(ContentProviderNative.java:117)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at android.os.Binder.execTransact(Binder.java:338)</div><div class="line">08-30 20:27:36.771 E/JavaBinder(  760):  at dalvik.system.NativeStart.run(Native Method)</div></pre></td></tr></table></figure></p>
@@ -284,33 +431,53 @@
 
       
     </div>
-    <footer>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
       
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android-Crash/">Android-Crash</a>
+    </span>
+    
+
+    
+
+    </div>
+
+    
   </div>
 </article>
 
 
 
+  <article>
 
-  <article class="post">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2017-03-09T15:11:24.000Z"><a href="/2017/03/09/Android在锁屏状态下显示Activity/">2017-03-09</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2017/03/09/Android在锁屏状态下显示Activity/">Android在锁屏状态下弹出Activity!</a></h1>
+    
+    <h3 class="article-title"><a href="/2017/03/09/Android在锁屏状态下显示Activity/"><span>Android在锁屏状态下弹出Activity!</span></a></h3>
+    
   
 
-    </header>
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/03/09/Android在锁屏状态下显示Activity/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-03-09T15:11:24.000Z">
+          2017-03-09
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
     <div class="entry">
       
         <p>Android 在锁屏状态中，有些情况下需要有较强的提示，这里仅仅使用通知栏不够，例如 来电，闹钟 等等。</p>
@@ -319,33 +486,60 @@
 
       
     </div>
-    <footer>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
       
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android-Note/">Android-Note</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/Activity/">Activity</a>
+    </span>
+    
+
+    </div>
+
+    
   </div>
 </article>
 
 
 
+  <article>
 
-  <article class="post">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2017-03-01T06:34:24.000Z"><a href="/2017/03/01/TAB页面实现/">2017-03-01</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2017/03/01/TAB页面实现/">TAB页面实现</a></h1>
+    
+    <h3 class="article-title"><a href="/2017/03/01/TAB页面实现/"><span>TAB页面实现</span></a></h3>
+    
   
 
-    </header>
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/03/01/TAB页面实现/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-03-01T06:34:24.000Z">
+          2017-03-01
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
     <div class="entry">
       
         <p>很多移动应用程序（微信，支付宝…）的主页面布局的底部是一个Tab控件，点击Tab不同的选项，切换不同的页面.<br>这种效果的实现方式多种多样。下面记录几种实现方式！</p>
@@ -357,33 +551,53 @@
 
       
     </div>
-    <footer>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
       
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android架构/">Android架构</a>
+    </span>
+    
+
+    
+
+    </div>
+
+    
   </div>
 </article>
 
 
 
+  <article>
 
-  <article class="post">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2017-03-01T06:32:24.000Z"><a href="/2017/03/01/LayoutInflater使用/">2017-03-01</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2017/03/01/LayoutInflater使用/">LayoutInflater使用</a></h1>
+    
+    <h3 class="article-title"><a href="/2017/03/01/LayoutInflater使用/"><span>LayoutInflater使用</span></a></h3>
+    
   
 
-    </header>
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/03/01/LayoutInflater使用/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-03-01T06:32:24.000Z">
+          2017-03-01
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
     <div class="entry">
       
         <h2 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h2><p>在日常开发中，会常用（Fragment）LayoutInflater这个类来加载layout布局文件，并返回对应的View对象！</p>
@@ -420,33 +634,60 @@
 
       
     </div>
-    <footer>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
       
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/UI绘制/">UI绘制</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/View/">View</a>
+    </span>
+    
+
+    </div>
+
+    
   </div>
 </article>
 
 
 
+  <article>
 
-  <article class="post">
   
-  <div class="post-content">
-    <header>
-      
-        <div class="icon"></div>
-        <time datetime="2017-03-01T06:25:24.000Z"><a href="/2017/03/01/Android应用退出方式总结/">2017-03-01</a></time>
-      
-      
-  
-    <h1 class="title"><a href="/2017/03/01/Android应用退出方式总结/">Android应用退出方式总结</a></h1>
+    
+    <h3 class="article-title"><a href="/2017/03/01/Android应用退出方式总结/"><span>Android应用退出方式总结</span></a></h3>
+    
   
 
-    </header>
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/03/01/Android应用退出方式总结/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-03-01T06:25:24.000Z">
+          2017-03-01
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
     <div class="entry">
       
         <h2 id="容器式"><a href="#容器式" class="headerlink" title="容器式"></a>容器式</h2><p>新建一个容器，存放所有打开的Activity。在程序注销或需要退出时，循环finish打开的activity。以将所有页面<br>Activity关闭。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line">import android.app.Activity;</div><div class="line">import android.os.Bundle;</div><div class="line"></div><div class="line">public class BaseActivity extends Activity &#123;</div><div class="line">    @Override</div><div class="line">    protected void onCreate(Bundle savedInstanceState) &#123;</div><div class="line">        super.onCreate(savedInstanceState);</div><div class="line">        // 添加Activity到堆栈</div><div class="line">        AtyContainer.getInstance().addActivity(this);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Override</div><div class="line">    protected void onDestroy() &#123;</div><div class="line">        super.onDestroy();</div><div class="line">        // 结束Activity&amp;从栈中移除该Activity</div><div class="line">        AtyContainer.getInstance().removeActivity(this);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">class AtyContainer &#123;</div><div class="line"></div><div class="line">    private AtyContainer() &#123;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    private static AtyContainer instance = new AtyContainer();</div><div class="line">    private static List&lt;Activity&gt; activityStack = new ArrayList&lt;Activity&gt;();</div><div class="line"></div><div class="line">    public static AtyContainer getInstance() &#123;</div><div class="line">        return instance;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void addActivity(Activity aty) &#123;</div><div class="line">        activityStack.add(aty);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public void removeActivity(Activity aty) &#123;</div><div class="line">        activityStack.remove(aty);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    /**</div><div class="line">     * 结束所有Activity</div><div class="line">     */</div><div class="line">    public void finishAllActivity() &#123;</div><div class="line">        for (int i = 0, size = activityStack.size(); i &lt; size; i++) &#123;</div><div class="line">            if (null != activityStack.get(i)) &#123;</div><div class="line">                activityStack.get(i).finish();</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        activityStack.clear();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
@@ -480,107 +721,52 @@
 
       
     </div>
-    <footer>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
       
-        
-        
-      
-      <div class="clearfix"></div>
-    </footer>
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android-Note/">Android-Note</a>
+    </span>
+    
+
+    
+
+    </div>
+
+    
   </div>
 </article>
 
 
 
 
+<nav class="pagination">
+  
+  <a href="/" class="pagination-prev">Prev</a>
+  
+  
+</nav>
+    </main>
 
-<nav id="pagination">
-  
-    <a href="/" class="alignleft prev">Prev</a>
-  
-  
-  <div class="clearfix"></div>
-</nav></div></div>
-    <aside id="sidebar" class="alignright">
-  <div class="search">
-  <form action="//google.com/search" method="get" accept-charset="utf-8">
-    <input type="search" name="q" results="0" placeholder="Search">
-    <input type="hidden" name="q" value="site:yoursite.com">
-  </form>
-</div>
-
-  
-<div class="widget tag">
-  <h3 class="title">Categories</h3>
-  <ul class="entry">
-  
-    <li><a href="/categories/Android-Crash/">Android-Crash</a><small>5</small></li>
-  
-    <li><a href="/categories/Android-Note/">Android-Note</a><small>11</small></li>
-  
-    <li><a href="/categories/Android架构/">Android架构</a><small>1</small></li>
-  
-    <li><a href="/categories/UI绘制/">UI绘制</a><small>1</small></li>
-  
-    <li><a href="/categories/pjsip/">pjsip</a><small>1</small></li>
-  
-  </ul>
-</div>
-
-
-  
-<div class="widget tag">
-  <h3 class="title">Tags</h3>
-  <ul class="entry">
-  
-    <li><a href="/tags/Activity/">Activity</a><small>6</small></li>
-  
-    <li><a href="/tags/Provider/">Provider</a><small>1</small></li>
-  
-    <li><a href="/tags/Toast/">Toast</a><small>1</small></li>
-  
-    <li><a href="/tags/View/">View</a><small>1</small></li>
-  
-    <li><a href="/tags/aar/">aar</a><small>1</small></li>
-  
-    <li><a href="/tags/button/">button</a><small>1</small></li>
-  
-    <li><a href="/tags/click/">click</a><small>1</small></li>
-  
-    <li><a href="/tags/jar/">jar</a><small>2</small></li>
-  
-    <li><a href="/tags/jni/">jni</a><small>1</small></li>
-  
-    <li><a href="/tags/listview/">listview</a><small>1</small></li>
-  
-    <li><a href="/tags/pjsip/">pjsip</a><small>1</small></li>
-  
-  </ul>
-</div>
-
-</aside>
-    <div class="clearfix"></div>
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2017 wooden-fishes
+    
+  </p>
+</footer>
+    
   </div>
-  <footer id="footer" class="inner"><div class="alignleft">
-  
-  &copy; 2017 wooden-fishes
-  
 </div>
-<div class="clearfix"></div></footer>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
-
-
-
-
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-(function($){
-  $('.fancybox').fancybox();
-})(jQuery);
-</script>
-
 </body>
 </html>
