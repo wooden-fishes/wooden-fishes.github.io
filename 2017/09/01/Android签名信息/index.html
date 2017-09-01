@@ -1,0 +1,143 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Android 签名信息 | Develop Note</title>
+
+  
+  <meta name="author" content="wooden-fishes">
+  
+
+  
+  <meta name="description" content="生成keystore1234keytool -genkey -alias android.keystore -keyalg RSA -validity 20000 -keystore android.keystore-alias android.keystore  生成的keystore别名-keyalg RSA  加密和数字签名的算法-validity 1000 有效天数">
+  
+
+  
+  
+  <meta name="keywords" content="keystore">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Android 签名信息"/>
+
+  <meta property="og:site_name" content="Develop Note"/>
+
+  
+  <meta property="og:image" content="/favicon.ico"/>
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Develop Note" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Develop Note</a>
+    </h1>
+    <p class="site-description"></p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Android 签名信息</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2017/09/01/Android签名信息/" rel="bookmark">
+        <time class="entry-date published" datetime="2017-09-01T13:43:24.000Z">
+          2017-09-01
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <h2 id="生成keystore"><a href="#生成keystore" class="headerlink" title="生成keystore"></a>生成keystore</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">keytool -genkey -alias android.keystore -keyalg RSA -validity 20000 -keystore android.keystore</div><div class="line">-alias android.keystore  生成的keystore别名</div><div class="line">-keyalg RSA  加密和数字签名的算法</div><div class="line">-validity 1000 有效天数</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h2 id="查看keystore内容"><a href="#查看keystore内容" class="headerlink" title="查看keystore内容"></a>查看keystore内容</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">keytool -list -keystore android.keystore</div><div class="line">keytool -list -v -keystore android.keystore</div><div class="line">keytool -list -v -keystore android.jks</div></pre></td></tr></table></figure>
+<h2 id="查看APK包的签名信息"><a href="#查看APK包的签名信息" class="headerlink" title="查看APK包的签名信息"></a>查看APK包的签名信息</h2><p>解压APK包，解压出METE-INF文件夹，得到其中的CERT.RSA文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">keytool -printcert -file META-INF/CERT.RSA</div></pre></td></tr></table></figure></p>
+<h2 id="修改keystore密码"><a href="#修改keystore密码" class="headerlink" title="修改keystore密码"></a>修改keystore密码</h2><p>执行后会提示输入证书的当前密码，和新密码以及重复新密码确认<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">keytool -storepasswd -keystore my.keystore</div></pre></td></tr></table></figure></p>
+<h2 id="修改keystore-alias"><a href="#修改keystore-alias" class="headerlink" title="修改keystore alias"></a>修改keystore alias</h2><p>my_name是证书中当前的alias，-destalias指定的是要修改为的alias，这里按规矩来，改为androiddebugkey！这个命令会先后提示输入keystore的密码和当前alias的密码。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">keytool -changealias -keystore my.keystore -alias my_name -destalias androiddebugkey</div></pre></td></tr></table></figure></p>
+<h2 id="修改alias的密码"><a href="#修改alias的密码" class="headerlink" title="修改alias的密码"></a>修改alias的密码</h2><p>执行后会提示输入keystore密码，alias密码，然后提示输入新的alias密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">keytool -keypasswd -keystore my.keystore -alias androiddebugkey</div></pre></td></tr></table></figure></p>
+<h2 id="签名文件使用"><a href="#签名文件使用" class="headerlink" title="签名文件使用"></a>签名文件使用</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">// 签名处理</div><div class="line">signingConfigs &#123;</div><div class="line">    debug &#123;</div><div class="line">    &#125;</div><div class="line">    release &#123;</div><div class="line">        storeFile file(&apos;android.jks&apos;)</div><div class="line">        storePassword &quot;android&quot;</div><div class="line">        keyAlias &apos;android&apos;</div><div class="line">        keyPassword &quot;android&quot;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/Android-Note/">Android-Note</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/keystore/">keystore</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2017 wooden-fishes
+    
+  </p>
+</footer>
+    
+  </div>
+</div>
+</body>
+</html>
